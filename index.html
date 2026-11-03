@@ -4,530 +4,461 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#071426">
-<title>DIAW HEALTH 2.0</title>
+<meta name="theme-color" content="#081525">
+<title>DIAW HEALTH 3.0</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+:root {
+ --bg:#081525;
+ --panel:#10243a;
+ --panel2:#0b1b2e;
+ --green:#35dfb5;
+ --text:#f2f7fc;
+ --muted:#91a5ba;
+ --border:#203951;
 }
-
-body {
-    background: #071426;
-    color: white;
-    font-family: Arial, sans-serif;
-    padding: 18px;
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+ background:var(--bg);color:var(--text);
+ font-family:Arial,sans-serif;padding:16px;
 }
-
-.app {
-    max-width: 650px;
-    margin: auto;
+.app{max-width:950px;margin:auto}
+header{
+ display:flex;justify-content:space-between;
+ align-items:center;padding:15px 0 25px;gap:10px;
 }
-
-header {
-    text-align: center;
-    padding: 25px 0 35px;
+.logo{font-size:25px;font-weight:bold}
+.logo span{color:var(--green)}
+.pill{
+ background:var(--panel);padding:9px 12px;
+ border:1px solid var(--border);
+ border-radius:30px;color:var(--muted);font-size:12px;
 }
-
-.logo {
-    font-size: 29px;
-    font-weight: bold;
+.dot{color:#8294a8}
+.dot.active{color:var(--green)}
+.hero{
+ background:linear-gradient(120deg,#153953,#10243a,#123c3c);
+ border:1px solid var(--border);
+ padding:25px;border-radius:18px;margin-bottom:20px;
 }
-
-.logo span {
-    color: #37dfb7;
+.hero small{color:var(--green);letter-spacing:2px}
+h1{font-size:29px;margin:12px 0}
+p{line-height:1.6}
+.muted{color:var(--muted);font-size:13px}
+.controls{
+ display:flex;gap:10px;flex-wrap:wrap;margin-top:20px
 }
-
-header p {
-    color: #91a4bb;
-    margin-top: 10px;
+button{
+ padding:13px 20px;border:0;border-radius:9px;
+ font-weight:bold;cursor:pointer
 }
-
-.panel {
-    background: #10233c;
-    padding: 20px;
-    border: 1px solid #263e59;
-    border-radius: 16px;
-    margin-bottom: 18px;
+#start{background:var(--green);color:#071525}
+#stop,.secondary{background:#263c52;color:white}
+button:disabled{opacity:.4}
+#status{margin-top:15px;color:var(--green);font-size:13px}
+h2{font-size:17px;margin:25px 0 14px}
+.grid{
+ display:grid;grid-template-columns:repeat(2,1fr);gap:12px
 }
-
-h2 {
-    color: #37dfb7;
-    margin-bottom: 15px;
+.card{
+ background:var(--panel);border:1px solid var(--border);
+ border-radius:14px;padding:18px;min-width:0
 }
-
-h3 {
-    margin-bottom: 12px;
+.card small{color:var(--muted);font-size:12px}
+.value{
+ color:var(--green);font-size:25px;
+ font-weight:bold;margin-top:13px;overflow-wrap:anywhere
 }
-
-p {
-    line-height: 1.6;
+.unit{color:var(--muted);font-size:12px;margin-top:7px}
+.wide{grid-column:1/-1}
+.graph{
+ position:relative;height:260px;
+ display:flex;align-items:flex-end;gap:7px;
+ padding:15px 10px 0;
+ overflow:hidden;background:
+ repeating-linear-gradient(to bottom,
+ transparent 0,transparent 49px,
+ rgba(255,255,255,.07) 50px);
+ border-left:1px solid #8396a9;
+ border-bottom:1px solid #8396a9;
+ border-radius:5px;
 }
-
-button {
-    background: #37dfb7;
-    color: #071426;
-    border: none;
-    padding: 14px;
-    border-radius: 9px;
-    width: 100%;
-    margin-top: 12px;
-    font-weight: bold;
-    font-size: 15px;
-    cursor: pointer;
+.bar{
+ flex:1;min-width:4px;max-width:55px;
+ background:linear-gradient(to top,#148b73,var(--green));
+ border-radius:5px 5px 0 0;
+ height:2px;transition:height .2s ease;
 }
-
-.secondary {
-    background: #263e59;
-    color: white;
+.graph-label{
+ display:flex;justify-content:space-between;
+ color:var(--muted);font-size:11px;margin-top:10px
 }
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+.interpretation{
+ background:#102d35;border:1px solid #245c55;
+ padding:18px;border-radius:13px;
 }
-
-.data {
-    background: #071a30;
-    border-radius: 12px;
-    padding: 15px;
-    border: 1px solid #263e59;
+.interpretation strong{color:var(--green)}
+#interpretation{margin-top:8px;font-size:14px;line-height:1.7}
+.history{
+ background:var(--panel);border:1px solid var(--border);
+ border-radius:14px;padding:17px
 }
-
-.data .value {
-    color: #37dfb7;
-    font-size: 22px;
-    font-weight: bold;
-    margin-top: 10px;
-    overflow-wrap: anywhere;
+.history-item{
+ padding:12px 0;border-bottom:1px solid var(--border);
+ font-size:13px;color:#b6c5d5;line-height:1.7
 }
-
-.data small {
-    color: #91a4bb;
+.notice{
+ margin-top:18px;padding:14px;
+ background:#292b20;border:1px solid #63552d;
+ color:#e5d59e;border-radius:10px;font-size:12px;line-height:1.6
 }
-
-.status {
-    color: #37dfb7;
-    font-size: 13px;
-    margin-top: 12px;
+footer{text-align:center;color:#687f96;font-size:12px;padding:30px}
+@media(max-width:420px){
+ .grid{grid-template-columns:1fr 1fr}
+ .card{padding:13px}
+ .value{font-size:20px}
+ .hero{padding:19px}
 }
-
-.warning {
-    color: #f1ce79;
-    background: #342b18;
-    padding: 14px;
-    border-radius: 10px;
-    font-size: 13px;
-    margin-bottom: 18px;
-}
-
-#journal {
-    color: #a8b8cb;
-    font-size: 13px;
-    line-height: 2;
-}
-
-footer {
-    text-align: center;
-    color: #637890;
-    padding: 25px;
-    font-size: 12px;
-}
-
-@media(max-width:380px) {
-    .grid {
-        grid-template-columns: 1fr;
-    }
-}
+@media(max-width:320px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 
 <body>
-
 <div class="app">
 
 <header>
-    <div class="logo">DIAW <span>HEALTH</span></div>
-    <p>Technologie et suivi personnel de santé</p>
- 
+ <div class="logo">DIAW <span>HEALTH</span></div>
+ <div class="pill"><span class="dot" id="dot">●</span> <span id="headerStatus">En attente</span></div>
 </header>
 
-<div class="panel">
-    <h2>Bienvenue</h2>
-    <p>
-        Analyse des capteurs disponibles
-        sur votre appareil Android.
-    </p>
-<h2> Accéléromètre </h2>: Capteur qui mesure les mouvements et les accélérations du téléphone.
-<h2>Gyroscope / Orientation</h2> : Capteur qui détecte les rotations et l'inclinaison du téléphone.
-<h2>Temps d'analyse </h2>: Durée nécessaire pour effectuer une mesure ou une analyse.
-<h2>Activité détectée </h2>: Mouvement ou comportement identifié par les capteurs du téléphone.
+<section class="hero">
+ <small>HEALTH MONITORING SYSTEM</small>
+ <h1>Analyse intelligente</h1>
+ <p class="muted">Surveillance dynamique des mouvements et de l'orientation de votre appareil.</p>
+ <div class="controls">
+  <button id="start">▶ Démarrer</button>
+  <button id="stop" disabled>■ Arrêter</button>
+ </div>
+ <p id="status">En attente de démarrage.</p>
+</section>
 
-    <button id="start">
-        Démarrer l'analyse des capteurs
-    </button>
+<h2>Surveillance des capteurs</h2>
+<section class="grid">
 
-    <button id="stop" class="secondary">
-        Arrêter l'analyse
-    </button>
+ <div class="card">
+  <small>ACCÉLÉROMÈTRE</small>
+  <div class="value" id="accel">--</div>
+  <div class="unit">Intensité m/s²</div>
+ </div>
 
-    <p id="status" class="status">
-        En attente de votre autorisation.
-    </p>
-</div>
+ <div class="card">
+  <small>ORIENTATION β / γ</small>
+  <div class="value" id="gyro">--</div>
+  <div class="unit">Angles en degrés</div>
+ </div>
 
+ <div class="card">
+  <small>TEMPS D'ANALYSE</small>
+  <div class="value" id="duree">00:00</div>
+  <div class="unit">Durée de session</div>
+ </div>
 
+ <div class="card">
+  <small>MOUVEMENTS DÉTECTÉS</small>
+  <div class="value" id="mouvements">0</div>
+  <div class="unit">Événements indicatifs</div>
+ </div>
 
-<div class="panel">
+</section>
 
-    <h2>État des capteurs</h2>
+<h2>DIAW GRAPHICS</h2>
+<section class="card">
+ <div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:15px">
+  <small>INTENSITÉ DES MOUVEMENTS</small>
+  <small id="graphState">EN ATTENTE</small>
+ </div>
 
-    <div class="grid">
+ <div class="graph" id="graph"></div>
 
-        <div class="data">
-            <small>Accéléromètre</small>
-            <div class="value" id="accel">--</div>
-        </div>
+ <div class="graph-label">
+  <span>Anciennes mesures</span>
+  <span>Mesure actuelle</span>
+ </div>
+ <p class="muted" style="margin-top:12px">
+  Chaque barre représente une mesure réelle de l'accéléromètre.
+ </p>
+</section>
 
-        <div class="data">
-            <small>Gyroscope / orientation</small>
-            <div class="value" id="gyro">--</div>
-        </div>
+<h2>Interprétation des résultats</h2>
+<section class="interpretation">
+ <strong id="niveau">Analyse non démarrée</strong>
+ <p id="interpretation">Démarrez l'analyse pour obtenir une interprétation indicative des mouvements.</p>
+</section>
 
-        <div class="data">
-            <small>Activité détectée</small>
-            <div class="value" id="mouvements">0</div>
-        </div>
+<h2>Historique des sessions</h2>
+<section class="history">
+ <div id="journal" class="muted">Aucune session enregistrée.</div>
+ <button class="secondary" id="save" style="width:100%;margin-top:15px">
+  Enregistrer le rapport
+ </button>
+</section>
 
-        <div class="data">
-            <small>Capteur de luminosité</small>
-            <div class="value" id="lumiere">Non vérifié</div>
-        </div>
-
-        <div class="data">
-            <small>Position GPS</small>
-            <div class="value" id="gps">Non activé</div>
-        </div>
-
-        <div class="data">
-            <small>Temps d'analyse</small>
-            <div class="value" id="duree">0 s</div>
-        </div>
-
-    </div>
-
-</div>
-
-<div class="panel">
-
-    <h2>Authentification</h2>
-
-    <p>
-        Le système biométrique Android
-        peut servir à confirmer votre identité.
-        Il ne fournit pas les caractéristiques
-        physiques de votre empreinte.
-    </p>
-
-    <button id="biometrie">
-        Vérifier la compatibilité biométrique
-    </button>
-
-    <p id="bioStatus" class="status">
-        Authentification non effectuée.
-    </p>
-
-</div>
-
-<div class="panel">
-
-    <h2>Historique de session</h2>
-
-    <div id="journal">
-        Aucune analyse enregistrée.
-    </div>
-
-    <button id="save" class="secondary">
-        Enregistrer le rapport de session
-    </button>
-
+<div class="notice">
+ <strong>Limites :</strong> les capteurs mesurent les mouvements du téléphone, pas directement la santé de son utilisateur. Les interprétations ne constituent pas un diagnostic médical.
 </div>
 
 <footer>
-  DIAW HEALTH 2.0<br>
-    Développé par Khadim Diaw
+ DIAW HEALTH 3.0<br>
+ Développé par Khadim Diaw
 </footer>
-
 </div>
 
 <script>
-
-// DIAW HEALTH 2.0
-
-let actif = false;
-let mouvements = 0;
-let debut = 0;
-let timer = null;
-let dernierMouvement = 0;
-let dernierRapport = "Aucune analyse";
-
 const $ = id => document.getElementById(id);
 
-function journal(texte) {
-    $("journal").textContent =
-        new Date().toLocaleTimeString("fr-FR")
-        + " — " + texte;
+let actif=false;
+let mouvements=0;
+let debut=0;
+let timer=null;
+let dernierMouvement=0;
+let derniereIntensite=null;
+let derniereVariation=0;
+let derniereActivite="En attente";
+let dureeFinale=0;
+let historiqueMesures=[];
+let derniereOrientation="--";
+
+const graph=$("graph");
+const N=12;
+let barres=[];
+
+// Création du graphique
+for(let i=0;i<N;i++){
+ const b=document.createElement("div");
+ b.className="bar";
+ graph.appendChild(b);
+ barres.push(b);
 }
 
-// Analyse des mouvements
-function analyserMouvement(event) {
-
-    if (!actif) return;
-
-    const a = event.accelerationIncludingGravity;
-
-    if (!a) {
-        $("accel").textContent = "Indisponible";
-        return;
-    }
-
-    const x = a.x || 0;
-    const y = a.y || 0;
-    const z = a.z || 0;
-
-    const intensite = Math.sqrt(
-        x*x + y*y + z*z
-    );
-
-    $("accel").textContent =
-        intensite.toFixed(2) + " m/s²";
-
-    // Détection indicative de mouvements
-    // Ce compteur n'est pas un podomètre certifié.
-
-    const maintenant = Date.now();
-
-    if (
-        Math.abs(intensite - 9.81) > 2.5 &&
-        maintenant - dernierMouvement > 700
-    ) {
-        mouvements++;
-        dernierMouvement = maintenant;
-
-        $("mouvements").textContent = mouvements;
-    }
-
+function formatTemps(s){
+ return String(Math.floor(s/60)).padStart(2,"0")
+ +":"+String(s%60).padStart(2,"0");
 }
 
-// Orientation du téléphone
-function analyserOrientation(event) {
+// Graphique alimenté par les vraies mesures
+function ajouterMesure(valeur){
+ historiqueMesures.push(valeur);
+ if(historiqueMesures.length>N)historiqueMesures.shift();
 
-    if (!actif) return;
+ const max=30;
 
-    const alpha = event.alpha;
-    const beta = event.beta;
-    const gamma = event.gamma;
-
-    if (alpha === null && beta === null) return;
-
-    $("gyro").textContent =
-        Math.round(beta || 0) + "° / " +
-        Math.round(gamma || 0) + "°";
+ barres.forEach((b,i)=>{
+  const v=historiqueMesures[i];
+  if(v===undefined){
+   b.style.height="2px";
+   return;
+  }
+  const hauteur=Math.max(3,Math.min(220,(v/max)*220));
+  b.style.height=hauteur+"px";
+ });
 }
 
-// GPS avec autorisation
-function obtenirPosition() {
+// Interprétation indicative
+function interpreter(variation){
+ let niveau,description;
 
-    if (!navigator.geolocation) {
-        $("gps").textContent = "Non disponible";
-        return;
-    }
+ if(variation<1.2){
+  niveau="Faible mouvement";
+  description="Le téléphone est relativement stable. Peu de variations importantes sont détectées.";
+ }else if(variation<3.5){
+  niveau="Mouvement modéré";
+  description="Des variations de mouvement sont observées. Le téléphone semble être légèrement déplacé.";
+ }else{
+  niveau="Mouvement important";
+  description="Des accélérations plus marquées sont détectées. Le téléphone subit des mouvements importants.";
+ }
 
-    navigator.geolocation.getCurrentPosition(
-        position => {
-            $("gps").textContent =
-                position.coords.latitude.toFixed(3)
-                + ", "
-                + position.coords.longitude.toFixed(3);
-        },
-        () => {
-            $("gps").textContent =
-                "Accès refusé";
-        },
-        {
-            enableHighAccuracy: false,
-            timeout: 10000
-        }
-    );
+ $("niveau").textContent=niveau;
+ $("interpretation").textContent=description;
+ $("activite")?.textContent;
+ derniereActivite=niveau;
 }
 
-// Démarrer l'analyse
-$("start").addEventListener("click", async () => {
+// Accéléromètre
+function analyserMouvement(e){
+ if(!actif)return;
 
-    if (!window.isSecureContext) {
-        $("status").textContent =
-            "Ouvrez DIAW HEALTH en HTTPS.";
-        return;
-    }
+ const a=e.accelerationIncludingGravity;
 
-    if (!("DeviceMotionEvent" in window)) {
-        $("status").textContent =
-            "Accéléromètre non accessible.";
-        return;
-    }
+ if(!a||a.x===null||a.y===null||a.z===null)return;
 
-    try {
+ const x=a.x,y=a.y,z=a.z;
+ const intensite=Math.sqrt(x*x+y*y+z*z);
 
-        if (
-            typeof DeviceMotionEvent.requestPermission
-            === "function"
-        ) {
-            const permission =
-                await DeviceMotionEvent.requestPermission();
+ // Retrait approximatif de la gravité au repos
+ const variation=Math.abs(intensite-9.81);
 
-            if (permission !== "granted") {
-                throw new Error(
-                    "Autorisation des mouvements refusée."
-                );
-            }
-        }
+ derniereIntensite=intensite;
+ derniereVariation=variation;
 
-        actif = true;
-        mouvements = 0;
-        debut = Date.now();
+ $("accel").textContent=intensite.toFixed(2);
+ ajouterMesure(variation);
+ interpreter(variation);
 
-        $("mouvements").textContent = "0";
+ const maintenant=Date.now();
 
-        window.addEventListener(
-            "devicemotion",
-            analyserMouvement
-        );
+ if(variation>2.5 && maintenant-dernierMouvement>700){
+  mouvements++;
+  dernierMouvement=maintenant;
+  $("mouvements").textContent=mouvements;
+ }
+}
 
-        window.addEventListener(
-            "deviceorientation",
-            analyserOrientation
-        );
+// Orientation
+function analyserOrientation(e){
+ if(!actif)return;
+ if(e.beta===null||e.gamma===null)return;
 
-        obtenirPosition();
+ derniereOrientation=
+ Math.round(e.beta)+"° / "+Math.round(e.gamma)+"°";
 
-        timer = setInterval(() => {
+ $("gyro").textContent=derniereOrientation;
+}
 
-            const secondes = Math.floor(
-                (Date.now() - debut) / 1000
-            );
+// Chronomètre
+function actualiserTemps(){
+ dureeFinale=Math.floor((Date.now()-debut)/1000);
+ $("duree").textContent=formatTemps(dureeFinale);
+}
 
-            $("duree").textContent =
-                secondes + " s";
+// Démarrer
+$("start").addEventListener("click",async()=>{
+ if(actif)return;
 
-        }, 1000);
+ if(!window.isSecureContext){
+  $("status").textContent="Ouvrez le site en HTTPS.";
+  return;
+ }
 
-        $("status").textContent =
-            "Analyse des capteurs active.";
+ if(!("DeviceMotionEvent" in window)){
+  $("status").textContent="Capteur de mouvement indisponible.";
+  return;
+ }
 
-        journal("Analyse démarrée.");
+ try{
+  if(typeof DeviceMotionEvent.requestPermission==="function"){
+   const p=await DeviceMotionEvent.requestPermission();
+   if(p!=="granted")throw new Error("Autorisation refusée.");
+  }
 
-    } catch (erreur) {
+  actif=true;
+  mouvements=0;
+  debut=Date.now();
+  dureeFinale=0;
+  dernierMouvement=0;
+  derniereIntensite=null;
+  derniereVariation=0;
+  historiqueMesures=[];
+  derniereActivite="En attente";
 
-        $("status").textContent = erreur.message;
+  $("accel").textContent="--";
+  $("gyro").textContent="--";
+  $("duree").textContent="00:00";
+  $("mouvements").textContent="0";
+  $("niveau").textContent="Collecte des données";
+  $("interpretation").textContent="En attente des premières mesures.";
+  $("graphState").textContent="ANALYSE ACTIVE";
 
-    }
+  ajouterMesure(0);
 
+  $("start").disabled=true;
+  $("stop").disabled=false;
+  $("headerStatus").textContent="Analyse active";
+  $("dot").classList.add("active");
+  $("status").textContent="Collecte des données en temps réel.";
+
+  window.addEventListener("devicemotion",analyserMouvement);
+  window.addEventListener("deviceorientation",analyserOrientation);
+
+  timer=setInterval(actualiserTemps,1000);
+
+ }catch(err){
+  $("status").textContent=err.message;
+ }
 });
 
 // Arrêter
-$("stop").addEventListener("click", () => {
+$("stop").addEventListener("click",()=>{
+ if(!actif)return;
 
-    actif = false;
+ actif=false;
 
-    window.removeEventListener(
-        "devicemotion",
-        analyserMouvement
-    );
+ window.removeEventListener("devicemotion",analyserMouvement);
+ window.removeEventListener("deviceorientation",analyserOrientation);
 
-    window.removeEventListener(
-        "deviceorientation",
-        analyserOrientation
-    );
+ clearInterval(timer);
+ actualiserTemps();
 
-    clearInterval(timer);
-
-    dernierRapport =
-        "Durée : " + $("duree").textContent +
-        " | Mouvements détectés : " + mouvements;
-
-    $("status").textContent =
-        "Analyse arrêtée.";
-
-    journal(dernierRapport);
-
+ $("start").disabled=false;
+ $("stop").disabled=true;
+ $("headerStatus").textContent="Arrêté";
+ $("dot").classList.remove("active");
+ $("status").textContent="Analyse terminée.";
+ $("graphState").textContent="SESSION TERMINÉE";
 });
 
-// Vérifier la biométrie
-$("biometrie").addEventListener("click", async () => {
+// Historique
+function afficherHistorique(){
+ const sessions=JSON.parse(localStorage.getItem("diawHealthSessions")||"[]");
+ $("journal").textContent="";
 
-    try {
+ if(!sessions.length){
+  $("journal").textContent="Aucune session enregistrée.";
+  return;
+ }
 
-        if (
-            !window.isSecureContext ||
-            !window.PublicKeyCredential
-        ) {
-            throw new Error(
-                "WebAuthn indisponible ou HTTPS manquant."
-            );
-        }
+ sessions.slice(-5).reverse().forEach(s=>{
+  const item=document.createElement("div");
+  item.className="history-item";
+  item.textContent=s.date+" — Durée : "+s.duree+
+  " — Mouvements : "+s.mouvements+
+  " — Intensité moyenne : "+s.moyenne+" m/s²";
+  $("journal").appendChild(item);
+ });
+}
 
-        const disponible =
-            await PublicKeyCredential
-            .isUserVerifyingPlatformAuthenticatorAvailable();
+// Sauvegarder
+$("save").addEventListener("click",()=>{
+ if(actif){
+  alert("Arrêtez l'analyse avant de sauvegarder.");
+  return;
+ }
+ if(debut===0){
+  alert("Aucune session à enregistrer.");
+  return;
+ }
 
-        $("bioStatus").textContent = disponible
-            ? "Authentificateur de plateforme disponible. "
-              + "Une passkey et un serveur sont nécessaires "
-              + "pour authentifier réellement."
-            : "Aucun authentificateur de plateforme détecté.";
+ const moyenne=historiqueMesures.length?
+ historiqueMesures.reduce((a,b)=>a+b,0)/historiqueMesures.length:0;
 
-    } catch (erreur) {
+ const sessions=JSON.parse(localStorage.getItem("diawHealthSessions")||"[]");
 
-        $("bioStatus").textContent = erreur.message;
+ sessions.push({
+  date:new Date().toLocaleString("fr-FR"),
+  duree:formatTemps(dureeFinale),
+  mouvements:mouvements,
+  moyenne:moyenne.toFixed(2)
+ });
 
-    }
+ localStorage.setItem("diawHealthSessions",JSON.stringify(sessions));
 
+ afficherHistorique();
+ debut=0;
+ alert("Rapport enregistré.");
 });
 
-// Enregistrer le rapport
-$("save").addEventListener("click", () => {
-
-    if (actif) {
-        alert("Arrêtez d'abord l'analyse.");
-        return;
-    }
-
-    const rapport = {
-        date: new Date().toLocaleString("fr-FR"),
-        mouvements: mouvements,
-        duree: $("duree").textContent,
-        rapport: dernierRapport
-    };
-
-    const historique = JSON.parse(
-        localStorage.getItem("diawSessions") || "[]"
-    );
-
-    historique.push(rapport);
-
-    localStorage.setItem(
-        "diawSessions",
-        JSON.stringify(historique)
-    );
-
-    alert("Rapport de session enregistré.");
-
-});
-
+afficherHistorique();
 </script>
-
 </body>
 </html>
+
