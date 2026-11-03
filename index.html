@@ -3,22 +3,21 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#071426">
-
-<title>DIAW HEALTH</title>
+<title>DIAW HEALTH 2.0</title>
 
 <style>
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
     background: #071426;
     color: white;
+    font-family: Arial, sans-serif;
     padding: 18px;
 }
 
@@ -29,11 +28,11 @@ body {
 
 header {
     text-align: center;
-    margin: 25px 0 40px;
+    padding: 25px 0 35px;
 }
 
 .logo {
-    font-size: 30px;
+    font-size: 29px;
     font-weight: bold;
 }
 
@@ -41,52 +40,43 @@ header {
     color: #37dfb7;
 }
 
-header p, .connexion p {
+header p {
     color: #91a4bb;
     margin-top: 10px;
-    line-height: 1.6;
 }
 
-.connexion {
-    text-align: center;
-    padding: 35px 18px;
+.panel {
     background: #10233c;
-    border-radius: 20px;
+    padding: 20px;
     border: 1px solid #263e59;
-}
-
-.cercle {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 25px;
-    border: 2px solid #37dfb7;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    color: #37dfb7;
-    font-size: 65px;
-    box-shadow: 0 0 25px #37dfb733;
+    border-radius: 16px;
+    margin-bottom: 18px;
 }
 
 h2 {
+    color: #37dfb7;
     margin-bottom: 15px;
 }
 
-button {
-    width: 100%;
-    padding: 15px;
-    margin-top: 15px;
-    border: none;
-    border-radius: 10px;
-    background: #37dfb7;
-    color: #071426;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
+h3 {
+    margin-bottom: 12px;
 }
 
-button:active {
-    transform: scale(.98);
+p {
+    line-height: 1.6;
+}
+
+button {
+    background: #37dfb7;
+    color: #071426;
+    border: none;
+    padding: 14px;
+    border-radius: 9px;
+    width: 100%;
+    margin-top: 12px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
 }
 
 .secondary {
@@ -94,106 +84,61 @@ button:active {
     color: white;
 }
 
-#message {
-    font-size: 13px;
-    margin-top: 20px;
-    overflow-wrap: anywhere;
-}
-
-[hidden] {
-    display: none !important;
-}
-
-.date {
-    color: #91a4bb;
-    margin-bottom: 20px;
-}
-
-.cartes {
+.grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
-    margin: 20px 0 30px;
 }
 
-.carte {
-    background: #10233c;
+.data {
+    background: #071a30;
+    border-radius: 12px;
+    padding: 15px;
     border: 1px solid #263e59;
-    border-radius: 14px;
-    padding: 18px;
 }
 
-.carte span {
-    font-size: 27px;
-}
-
-.carte h3 {
-    font-size: 13px;
-    color: #a8b8cb;
-    margin: 12px 0;
-}
-
-.carte strong {
-    font-size: 21px;
+.data .value {
     color: #37dfb7;
-}
-
-form {
-    background: #10233c;
-    padding: 20px;
-    border-radius: 15px;
-    margin: 20px 0 30px;
-}
-
-label {
-    display: block;
-    margin-top: 15px;
-    font-size: 13px;
-    color: #a8b8cb;
-}
-
-input {
-    width: 100%;
-    padding: 13px;
-    margin-top: 8px;
-    background: #071426;
-    color: white;
-    border: 1px solid #304760;
-    border-radius: 8px;
-    font-size: 16px;
-}
-
-.historique-item {
-    padding: 13px;
-    margin: 10px 0;
-    background: #10233c;
-    border-radius: 10px;
-    font-size: 13px;
-    color: #a8b8cb;
-    line-height: 1.8;
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 10px;
     overflow-wrap: anywhere;
 }
 
-.avertissement {
-    padding: 14px;
+.data small {
+    color: #91a4bb;
+}
+
+.status {
+    color: #37dfb7;
+    font-size: 13px;
+    margin-top: 12px;
+}
+
+.warning {
+    color: #f1ce79;
     background: #342b18;
-    border: 1px solid #79602c;
+    padding: 14px;
     border-radius: 10px;
-    color: #f3d68c;
-    font-size: 12px;
-    line-height: 1.6;
-    margin: 20px 0;
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+#journal {
+    color: #a8b8cb;
+    font-size: 13px;
+    line-height: 2;
 }
 
 footer {
     text-align: center;
     color: #637890;
-    margin: 40px 0 15px;
+    padding: 25px;
     font-size: 12px;
 }
 
-@media(max-width: 380px) {
-    .cartes {
+@media(max-width:380px) {
+    .grid {
         grid-template-columns: 1fr;
     }
 }
@@ -202,314 +147,382 @@ footer {
 
 <body>
 
-<main class="app">
+<div class="app">
 
 <header>
     <div class="logo">DIAW <span>HEALTH</span></div>
-    <p>Votre santé, votre priorité.</p>
+    <p>Technologie et suivi personnel de santé</p>
 </header>
 
-<!-- CONNEXION -->
-
-<section id="connexion" class="connexion">
-
-    <div class="cercle">◎</div>
-
+<div class="panel">
     <h2>Bienvenue</h2>
+    <p>
+        Analyse des capteurs disponibles
+        sur votre appareil Android.
+    </p>
+
+    <button id="start">
+        Démarrer l'analyse des capteurs
+    </button>
+
+    <button id="stop" class="secondary">
+        Arrêter l'analyse
+    </button>
+
+    <p id="status" class="status">
+        En attente de votre autorisation.
+    </p>
+</div>
+
+<div class="warning">
+    Ces données concernent les capteurs du téléphone.
+    Elles ne constituent pas un diagnostic médical.
+    Aucun résultat biométrique ou vital ne sera inventé.
+</div>
+
+<div class="panel">
+
+    <h2>État des capteurs</h2>
+
+    <div class="grid">
+
+        <div class="data">
+            <small>Accéléromètre</small>
+            <div class="value" id="accel">--</div>
+        </div>
+
+        <div class="data">
+            <small>Gyroscope / orientation</small>
+            <div class="value" id="gyro">--</div>
+        </div>
+
+        <div class="data">
+            <small>Activité détectée</small>
+            <div class="value" id="mouvements">0</div>
+        </div>
+
+        <div class="data">
+            <small>Capteur de luminosité</small>
+            <div class="value" id="lumiere">Non vérifié</div>
+        </div>
+
+        <div class="data">
+            <small>Position GPS</small>
+            <div class="value" id="gps">Non activé</div>
+        </div>
+
+        <div class="data">
+            <small>Temps d'analyse</small>
+            <div class="value" id="duree">0 s</div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="panel">
+
+    <h2>Authentification</h2>
 
     <p>
-        Accédez à votre espace personnel
-        de suivi de santé.
+        Le système biométrique Android
+        peut servir à confirmer votre identité.
+        Il ne fournit pas les caractéristiques
+        physiques de votre empreinte.
     </p>
 
-    <button id="btnEmpreinte">
-        🔐 Vérifier la compatibilité biométrique
+    <button id="biometrie">
+        Vérifier la compatibilité biométrique
     </button>
 
-    <button id="btnDemo" class="secondary">
-        Accéder au mode démonstration
-    </button>
-
-    <p id="message">
-        Votre espace est verrouillé.
+    <p id="bioStatus" class="status">
+        Authentification non effectuée.
     </p>
 
-</section>
+</div>
 
-<!-- TABLEAU DE BORD -->
+<div class="panel">
 
-<section id="dashboard" hidden>
+    <h2>Historique de session</h2>
 
-    <h2>Mon tableau de santé</h2>
-
-    <p class="date" id="date"></p>
-
-    <div class="avertissement">
-        Attention : ces données sont saisies manuellement.
-        Le téléphone ne mesure pas automatiquement
-        les constantes vitales.
+    <div id="journal">
+        Aucune analyse enregistrée.
     </div>
 
-    <div class="cartes">
-
-        <article class="carte">
-            <span>❤️</span>
-            <h3>Fréquence cardiaque</h3>
-            <strong id="cardiaque">-- BPM</strong>
-        </article>
-
-        <article class="carte">
-            <span>💧</span>
-            <h3>Oxygénation</h3>
-            <strong id="oxygene">-- %</strong>
-        </article>
-
-        <article class="carte">
-            <span>🩺</span>
-            <h3>Tension artérielle</h3>
-            <strong id="tension">-- / --</strong>
-        </article>
-
-        <article class="carte">
-            <span>🌡️</span>
-            <h3>Température</h3>
-            <strong id="temperature">-- °C</strong>
-        </article>
-
-    </div>
-
-    <h3>Enregistrer une mesure</h3>
-
-    <form id="formSante">
-
-        <label>Fréquence cardiaque (BPM)</label>
-        <input type="number" id="inputCardiaque"
-        min="1" max="250" required>
-
-        <label>Oxygénation (%)</label>
-        <input type="number" id="inputOxygene"
-        min="1" max="100" required>
-
-        <label>Tension artérielle (exemple 120/80)</label>
-        <input type="text" id="inputTension"
-        placeholder="120/80" required>
-
-        <label>Température (°C)</label>
-        <input type="number" id="inputTemperature"
-        min="25" max="45" step="0.1" required>
-
-        <button type="submit">
-            Enregistrer mes données
-        </button>
-
-    </form>
-
-    <h3>Historique des mesures</h3>
-
-    <div id="historique"></div>
-
-    <button id="btnQuitter" class="secondary">
-        🔒 Verrouiller mon espace
+    <button id="save" class="secondary">
+        Enregistrer le rapport de session
     </button>
 
-</section>
+</div>
 
 <footer>
-    DIAW HEALTH © 2026
-    <br><br>
+    DIAW HEALTH 2.0<br>
     Développé par DIAW DIGITAL LAB
 </footer>
 
-</main>
+</div>
 
 <script>
 
-// =================================
-// DIAW HEALTH - JAVASCRIPT
-// =================================
+// DIAW HEALTH 2.0
 
-const connexion = document.getElementById("connexion");
-const dashboard = document.getElementById("dashboard");
-const message = document.getElementById("message");
+let actif = false;
+let mouvements = 0;
+let debut = 0;
+let timer = null;
+let dernierMouvement = 0;
+let dernierRapport = "Aucune analyse";
 
-// Vérification de compatibilité biométrique
-document.getElementById("btnEmpreinte")
-.addEventListener("click", async function() {
+const $ = id => document.getElementById(id);
 
-    message.textContent = "Vérification en cours...";
+function journal(texte) {
+    $("journal").textContent =
+        new Date().toLocaleTimeString("fr-FR")
+        + " — " + texte;
+}
+
+// Analyse des mouvements
+function analyserMouvement(event) {
+
+    if (!actif) return;
+
+    const a = event.accelerationIncludingGravity;
+
+    if (!a) {
+        $("accel").textContent = "Indisponible";
+        return;
+    }
+
+    const x = a.x || 0;
+    const y = a.y || 0;
+    const z = a.z || 0;
+
+    const intensite = Math.sqrt(
+        x*x + y*y + z*z
+    );
+
+    $("accel").textContent =
+        intensite.toFixed(2) + " m/s²";
+
+    // Détection indicative de mouvements
+    // Ce compteur n'est pas un podomètre certifié.
+
+    const maintenant = Date.now();
+
+    if (
+        Math.abs(intensite - 9.81) > 2.5 &&
+        maintenant - dernierMouvement > 700
+    ) {
+        mouvements++;
+        dernierMouvement = maintenant;
+
+        $("mouvements").textContent = mouvements;
+    }
+
+}
+
+// Orientation du téléphone
+function analyserOrientation(event) {
+
+    if (!actif) return;
+
+    const alpha = event.alpha;
+    const beta = event.beta;
+    const gamma = event.gamma;
+
+    if (alpha === null && beta === null) return;
+
+    $("gyro").textContent =
+        Math.round(beta || 0) + "° / " +
+        Math.round(gamma || 0) + "°";
+}
+
+// GPS avec autorisation
+function obtenirPosition() {
+
+    if (!navigator.geolocation) {
+        $("gps").textContent = "Non disponible";
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+        position => {
+            $("gps").textContent =
+                position.coords.latitude.toFixed(3)
+                + ", "
+                + position.coords.longitude.toFixed(3);
+        },
+        () => {
+            $("gps").textContent =
+                "Accès refusé";
+        },
+        {
+            enableHighAccuracy: false,
+            timeout: 10000
+        }
+    );
+}
+
+// Démarrer l'analyse
+$("start").addEventListener("click", async () => {
+
+    if (!window.isSecureContext) {
+        $("status").textContent =
+            "Ouvrez DIAW HEALTH en HTTPS.";
+        return;
+    }
+
+    if (!("DeviceMotionEvent" in window)) {
+        $("status").textContent =
+            "Accéléromètre non accessible.";
+        return;
+    }
 
     try {
 
-        if (!window.isSecureContext) {
-            throw new Error(
-                "HTTPS obligatoire."
-            );
+        if (
+            typeof DeviceMotionEvent.requestPermission
+            === "function"
+        ) {
+            const permission =
+                await DeviceMotionEvent.requestPermission();
+
+            if (permission !== "granted") {
+                throw new Error(
+                    "Autorisation des mouvements refusée."
+                );
+            }
         }
 
-        if (!window.PublicKeyCredential) {
+        actif = true;
+        mouvements = 0;
+        debut = Date.now();
+
+        $("mouvements").textContent = "0";
+
+        window.addEventListener(
+            "devicemotion",
+            analyserMouvement
+        );
+
+        window.addEventListener(
+            "deviceorientation",
+            analyserOrientation
+        );
+
+        obtenirPosition();
+
+        timer = setInterval(() => {
+
+            const secondes = Math.floor(
+                (Date.now() - debut) / 1000
+            );
+
+            $("duree").textContent =
+                secondes + " s";
+
+        }, 1000);
+
+        $("status").textContent =
+            "Analyse des capteurs active.";
+
+        journal("Analyse démarrée.");
+
+    } catch (erreur) {
+
+        $("status").textContent = erreur.message;
+
+    }
+
+});
+
+// Arrêter
+$("stop").addEventListener("click", () => {
+
+    actif = false;
+
+    window.removeEventListener(
+        "devicemotion",
+        analyserMouvement
+    );
+
+    window.removeEventListener(
+        "deviceorientation",
+        analyserOrientation
+    );
+
+    clearInterval(timer);
+
+    dernierRapport =
+        "Durée : " + $("duree").textContent +
+        " | Mouvements détectés : " + mouvements;
+
+    $("status").textContent =
+        "Analyse arrêtée.";
+
+    journal(dernierRapport);
+
+});
+
+// Vérifier la biométrie
+$("biometrie").addEventListener("click", async () => {
+
+    try {
+
+        if (
+            !window.isSecureContext ||
+            !window.PublicKeyCredential
+        ) {
             throw new Error(
-                "WebAuthn non disponible dans ce navigateur."
+                "WebAuthn indisponible ou HTTPS manquant."
             );
         }
 
         const disponible =
-        await PublicKeyCredential
-        .isUserVerifyingPlatformAuthenticatorAvailable();
+            await PublicKeyCredential
+            .isUserVerifyingPlatformAuthenticatorAvailable();
 
-        if (!disponible) {
-            throw new Error(
-                "Authentificateur biométrique non détecté."
-            );
-        }
-
-        message.textContent =
-        "Compatibilité biométrique détectée. " +
-        "L'enregistrement et la vérification sécurisée " +
-        "nécessitent encore un serveur WebAuthn.";
+        $("bioStatus").textContent = disponible
+            ? "Authentificateur de plateforme disponible. "
+              + "Une passkey et un serveur sont nécessaires "
+              + "pour authentifier réellement."
+            : "Aucun authentificateur de plateforme détecté.";
 
     } catch (erreur) {
 
-        message.textContent = erreur.message;
+        $("bioStatus").textContent = erreur.message;
 
     }
 
 });
 
-// Mode démonstration
-document.getElementById("btnDemo")
-.addEventListener("click", function() {
+// Enregistrer le rapport
+$("save").addEventListener("click", () => {
 
-    ouvrirDashboard();
-
-});
-
-// Ouvrir le tableau de bord
-function ouvrirDashboard() {
-
-    connexion.hidden = true;
-    dashboard.hidden = false;
-
-    document.getElementById("date").textContent =
-    new Date().toLocaleDateString("fr-FR");
-
-    chargerDonnees();
-
-}
-
-// Récupérer les données enregistrées
-function chargerDonnees() {
-
-    const donnees = JSON.parse(
-        localStorage.getItem("diawHealth") || "[]"
-    );
-
-    const derniere = donnees[donnees.length - 1];
-
-    if (derniere) {
-
-        document.getElementById("cardiaque").textContent =
-        derniere.cardiaque + " BPM";
-
-        document.getElementById("oxygene").textContent =
-        derniere.oxygene + " %";
-
-        document.getElementById("tension").textContent =
-        derniere.tension;
-
-        document.getElementById("temperature").textContent =
-        derniere.temperature + " °C";
-
-    }
-
-    const historique =
-    document.getElementById("historique");
-
-    historique.innerHTML = "";
-
-    donnees.slice().reverse().forEach(d => {
-
-        const item = document.createElement("div");
-
-        item.className = "historique-item";
-
-        item.textContent =
-        d.date + " | " +
-        d.cardiaque + " BPM | " +
-        d.oxygene + " % | " +
-        d.tension + " | " +
-        d.temperature + " °C";
-
-        historique.appendChild(item);
-
-    });
-
-    if (donnees.length === 0) {
-        historique.textContent =
-        "Aucune mesure enregistrée.";
-    }
-
-}
-
-// Enregistrer les mesures
-document.getElementById("formSante")
-.addEventListener("submit", function(e) {
-
-    e.preventDefault();
-
-    const cardiaque =
-    document.getElementById("inputCardiaque").value;
-
-    const oxygene =
-    document.getElementById("inputOxygene").value;
-
-    const tension =
-    document.getElementById("inputTension").value.trim();
-
-    const temperature =
-    document.getElementById("inputTemperature").value;
-
-    if (!/^\d{2,3}\/\d{2,3}$/.test(tension)) {
-        alert("Format de tension incorrect. Exemple : 120/80");
+    if (actif) {
+        alert("Arrêtez d'abord l'analyse.");
         return;
     }
 
-    const donnees = JSON.parse(
-        localStorage.getItem("diawHealth") || "[]"
+    const rapport = {
+        date: new Date().toLocaleString("fr-FR"),
+        mouvements: mouvements,
+        duree: $("duree").textContent,
+        rapport: dernierRapport
+    };
+
+    const historique = JSON.parse(
+        localStorage.getItem("diawSessions") || "[]"
     );
 
-    donnees.push({
-
-        cardiaque: cardiaque,
-        oxygene: oxygene,
-        tension: tension,
-        temperature: temperature,
-
-        date: new Date().toLocaleString("fr-FR")
-
-    });
+    historique.push(rapport);
 
     localStorage.setItem(
-        "diawHealth",
-        JSON.stringify(donnees)
+        "diawSessions",
+        JSON.stringify(historique)
     );
 
-    this.reset();
-
-    chargerDonnees();
-
-    alert("Mesures enregistrées avec succès.");
-
-});
-
-// Verrouiller l'espace
-document.getElementById("btnQuitter")
-.addEventListener("click", function() {
-
-    dashboard.hidden = true;
-    connexion.hidden = false;
-
-    message.textContent =
-    "Votre espace est verrouillé.";
+    alert("Rapport de session enregistré.");
 
 });
 
