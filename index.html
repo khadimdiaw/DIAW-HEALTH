@@ -1,0 +1,519 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071426">
+
+<title>DIAW HEALTH</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #071426;
+    color: white;
+    padding: 18px;
+}
+
+.app {
+    max-width: 650px;
+    margin: auto;
+}
+
+header {
+    text-align: center;
+    margin: 25px 0 40px;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #37dfb7;
+}
+
+header p, .connexion p {
+    color: #91a4bb;
+    margin-top: 10px;
+    line-height: 1.6;
+}
+
+.connexion {
+    text-align: center;
+    padding: 35px 18px;
+    background: #10233c;
+    border-radius: 20px;
+    border: 1px solid #263e59;
+}
+
+.cercle {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 25px;
+    border: 2px solid #37dfb7;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: #37dfb7;
+    font-size: 65px;
+    box-shadow: 0 0 25px #37dfb733;
+}
+
+h2 {
+    margin-bottom: 15px;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 10px;
+    background: #37dfb7;
+    color: #071426;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(.98);
+}
+
+.secondary {
+    background: #263e59;
+    color: white;
+}
+
+#message {
+    font-size: 13px;
+    margin-top: 20px;
+    overflow-wrap: anywhere;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.date {
+    color: #91a4bb;
+    margin-bottom: 20px;
+}
+
+.cartes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 20px 0 30px;
+}
+
+.carte {
+    background: #10233c;
+    border: 1px solid #263e59;
+    border-radius: 14px;
+    padding: 18px;
+}
+
+.carte span {
+    font-size: 27px;
+}
+
+.carte h3 {
+    font-size: 13px;
+    color: #a8b8cb;
+    margin: 12px 0;
+}
+
+.carte strong {
+    font-size: 21px;
+    color: #37dfb7;
+}
+
+form {
+    background: #10233c;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px 0 30px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-size: 13px;
+    color: #a8b8cb;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    margin-top: 8px;
+    background: #071426;
+    color: white;
+    border: 1px solid #304760;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.historique-item {
+    padding: 13px;
+    margin: 10px 0;
+    background: #10233c;
+    border-radius: 10px;
+    font-size: 13px;
+    color: #a8b8cb;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.avertissement {
+    padding: 14px;
+    background: #342b18;
+    border: 1px solid #79602c;
+    border-radius: 10px;
+    color: #f3d68c;
+    font-size: 12px;
+    line-height: 1.6;
+    margin: 20px 0;
+}
+
+footer {
+    text-align: center;
+    color: #637890;
+    margin: 40px 0 15px;
+    font-size: 12px;
+}
+
+@media(max-width: 380px) {
+    .cartes {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<main class="app">
+
+<header>
+    <div class="logo">DIAW <span>HEALTH</span></div>
+    <p>Votre santé, votre priorité.</p>
+</header>
+
+<!-- CONNEXION -->
+
+<section id="connexion" class="connexion">
+
+    <div class="cercle">◎</div>
+
+    <h2>Bienvenue</h2>
+
+    <p>
+        Accédez à votre espace personnel
+        de suivi de santé.
+    </p>
+
+    <button id="btnEmpreinte">
+        🔐 Vérifier la compatibilité biométrique
+    </button>
+
+    <button id="btnDemo" class="secondary">
+        Accéder au mode démonstration
+    </button>
+
+    <p id="message">
+        Votre espace est verrouillé.
+    </p>
+
+</section>
+
+<!-- TABLEAU DE BORD -->
+
+<section id="dashboard" hidden>
+
+    <h2>Mon tableau de santé</h2>
+
+    <p class="date" id="date"></p>
+
+    <div class="avertissement">
+        Attention : ces données sont saisies manuellement.
+        Le téléphone ne mesure pas automatiquement
+        les constantes vitales.
+    </div>
+
+    <div class="cartes">
+
+        <article class="carte">
+            <span>❤️</span>
+            <h3>Fréquence cardiaque</h3>
+            <strong id="cardiaque">-- BPM</strong>
+        </article>
+
+        <article class="carte">
+            <span>💧</span>
+            <h3>Oxygénation</h3>
+            <strong id="oxygene">-- %</strong>
+        </article>
+
+        <article class="carte">
+            <span>🩺</span>
+            <h3>Tension artérielle</h3>
+            <strong id="tension">-- / --</strong>
+        </article>
+
+        <article class="carte">
+            <span>🌡️</span>
+            <h3>Température</h3>
+            <strong id="temperature">-- °C</strong>
+        </article>
+
+    </div>
+
+    <h3>Enregistrer une mesure</h3>
+
+    <form id="formSante">
+
+        <label>Fréquence cardiaque (BPM)</label>
+        <input type="number" id="inputCardiaque"
+        min="1" max="250" required>
+
+        <label>Oxygénation (%)</label>
+        <input type="number" id="inputOxygene"
+        min="1" max="100" required>
+
+        <label>Tension artérielle (exemple 120/80)</label>
+        <input type="text" id="inputTension"
+        placeholder="120/80" required>
+
+        <label>Température (°C)</label>
+        <input type="number" id="inputTemperature"
+        min="25" max="45" step="0.1" required>
+
+        <button type="submit">
+            Enregistrer mes données
+        </button>
+
+    </form>
+
+    <h3>Historique des mesures</h3>
+
+    <div id="historique"></div>
+
+    <button id="btnQuitter" class="secondary">
+        🔒 Verrouiller mon espace
+    </button>
+
+</section>
+
+<footer>
+    DIAW HEALTH © 2026
+    <br><br>
+    Développé par DIAW DIGITAL LAB
+</footer>
+
+</main>
+
+<script>
+
+// =================================
+// DIAW HEALTH - JAVASCRIPT
+// =================================
+
+const connexion = document.getElementById("connexion");
+const dashboard = document.getElementById("dashboard");
+const message = document.getElementById("message");
+
+// Vérification de compatibilité biométrique
+document.getElementById("btnEmpreinte")
+.addEventListener("click", async function() {
+
+    message.textContent = "Vérification en cours...";
+
+    try {
+
+        if (!window.isSecureContext) {
+            throw new Error(
+                "HTTPS obligatoire."
+            );
+        }
+
+        if (!window.PublicKeyCredential) {
+            throw new Error(
+                "WebAuthn non disponible dans ce navigateur."
+            );
+        }
+
+        const disponible =
+        await PublicKeyCredential
+        .isUserVerifyingPlatformAuthenticatorAvailable();
+
+        if (!disponible) {
+            throw new Error(
+                "Authentificateur biométrique non détecté."
+            );
+        }
+
+        message.textContent =
+        "Compatibilité biométrique détectée. " +
+        "L'enregistrement et la vérification sécurisée " +
+        "nécessitent encore un serveur WebAuthn.";
+
+    } catch (erreur) {
+
+        message.textContent = erreur.message;
+
+    }
+
+});
+
+// Mode démonstration
+document.getElementById("btnDemo")
+.addEventListener("click", function() {
+
+    ouvrirDashboard();
+
+});
+
+// Ouvrir le tableau de bord
+function ouvrirDashboard() {
+
+    connexion.hidden = true;
+    dashboard.hidden = false;
+
+    document.getElementById("date").textContent =
+    new Date().toLocaleDateString("fr-FR");
+
+    chargerDonnees();
+
+}
+
+// Récupérer les données enregistrées
+function chargerDonnees() {
+
+    const donnees = JSON.parse(
+        localStorage.getItem("diawHealth") || "[]"
+    );
+
+    const derniere = donnees[donnees.length - 1];
+
+    if (derniere) {
+
+        document.getElementById("cardiaque").textContent =
+        derniere.cardiaque + " BPM";
+
+        document.getElementById("oxygene").textContent =
+        derniere.oxygene + " %";
+
+        document.getElementById("tension").textContent =
+        derniere.tension;
+
+        document.getElementById("temperature").textContent =
+        derniere.temperature + " °C";
+
+    }
+
+    const historique =
+    document.getElementById("historique");
+
+    historique.innerHTML = "";
+
+    donnees.slice().reverse().forEach(d => {
+
+        const item = document.createElement("div");
+
+        item.className = "historique-item";
+
+        item.textContent =
+        d.date + " | " +
+        d.cardiaque + " BPM | " +
+        d.oxygene + " % | " +
+        d.tension + " | " +
+        d.temperature + " °C";
+
+        historique.appendChild(item);
+
+    });
+
+    if (donnees.length === 0) {
+        historique.textContent =
+        "Aucune mesure enregistrée.";
+    }
+
+}
+
+// Enregistrer les mesures
+document.getElementById("formSante")
+.addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    const cardiaque =
+    document.getElementById("inputCardiaque").value;
+
+    const oxygene =
+    document.getElementById("inputOxygene").value;
+
+    const tension =
+    document.getElementById("inputTension").value.trim();
+
+    const temperature =
+    document.getElementById("inputTemperature").value;
+
+    if (!/^\d{2,3}\/\d{2,3}$/.test(tension)) {
+        alert("Format de tension incorrect. Exemple : 120/80");
+        return;
+    }
+
+    const donnees = JSON.parse(
+        localStorage.getItem("diawHealth") || "[]"
+    );
+
+    donnees.push({
+
+        cardiaque: cardiaque,
+        oxygene: oxygene,
+        tension: tension,
+        temperature: temperature,
+
+        date: new Date().toLocaleString("fr-FR")
+
+    });
+
+    localStorage.setItem(
+        "diawHealth",
+        JSON.stringify(donnees)
+    );
+
+    this.reset();
+
+    chargerDonnees();
+
+    alert("Mesures enregistrées avec succès.");
+
+});
+
+// Verrouiller l'espace
+document.getElementById("btnQuitter")
+.addEventListener("click", function() {
+
+    dashboard.hidden = true;
+    connexion.hidden = false;
+
+    message.textContent =
+    "Votre espace est verrouillé.";
+
+});
+
+</script>
+
+</body>
+</html>
