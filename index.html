@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#081525">
 <title>DIAW HEALTH 3.0</title>
+ <link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#081225">
 
 <style>
 :root {
@@ -458,6 +460,15 @@ $("save").addEventListener("click",()=>{
 });
 
 afficherHistorique();
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js")
+      .then(() => console.log("DIAW HEALTH : Service Worker activé"))
+      .catch(error => console.error("Erreur :", error));
+  });
+}
 </script>
 </body>
 </html>
