@@ -627,3 +627,70 @@ footer {
     animation: none;
   }
 }
+
+/* DIAW HEALTH 4.1 - Espace personnel */
+.auth-section {
+  margin: 20px 0;
+}
+
+.auth-section form {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.auth-section h3 {
+  margin: 8px 0;
+  color: var(--green);
+}
+
+.auth-section label {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.auth-section input {
+  width: 100%;
+  min-height: 46px;
+  padding: 12px;
+  color: white;
+  background: #0b1b30;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+}
+
+.auth-section input:focus {
+  border-color: var(--green);
+}
+
+.auth-section button {
+  margin-top: 8px;
+}
+
+.auth-separator {
+  height: 1px;
+  margin: 24px 0;
+  background: var(--border);
+}
+
+#authMessage {
+  margin-top: 12px;
+}
+
+#userPanel {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+#userPanel[hidden] {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .auth-section {
+    padding: 16px;
+  }
+}

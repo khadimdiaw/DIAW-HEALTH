@@ -20,6 +20,42 @@
  <div class="pill"><span class="dot" id="dot">●</span> <span id="headerStatus">En attente</span></div>
 </header>
 
+<section class="card auth-section" id="authSection">
+  <small>ESPACE PERSONNEL</small>
+  <h2>Votre compte DIAW HEALTH</h2>
+  <p class="muted">Créez votre compte pour retrouver votre progression.</p>
+
+  <div id="authMessage" class="muted" role="status"></div>
+
+  <form id="signupForm">
+    <h3>Créer un compte</h3>
+    <label for="signupName">Nom complet</label>
+    <input id="signupName" type="text" autocomplete="name" required>
+    <label for="signupEmail">Adresse e-mail</label>
+    <input id="signupEmail" type="email" autocomplete="email" required>
+    <label for="signupPassword">Mot de passe</label>
+    <input id="signupPassword" type="password" minlength="6" autocomplete="new-password" required>
+    <button type="submit">Créer mon compte</button>
+  </form>
+
+  <div class="auth-separator"></div>
+
+  <form id="loginForm">
+    <h3>Déjà inscrit ? Connexion</h3>
+    <label for="loginEmail">Adresse e-mail</label>
+    <input id="loginEmail" type="email" autocomplete="email" required>
+    <label for="loginPassword">Mot de passe</label>
+    <input id="loginPassword" type="password" autocomplete="current-password" required>
+    <button type="submit" class="secondary">Se connecter</button>
+  </form>
+
+  <div id="userPanel" hidden>
+    <p>Connecté en tant que <strong id="userName"></strong></p>
+    <button id="logoutButton" type="button" class="secondary">Se déconnecter</button>
+  </div>
+</section>
+
+
 <section class="hero">
  <small>HEALTH MONITORING SYSTEM</small>
  <h1>Analyse intelligente</h1>
@@ -119,6 +155,10 @@
 </footer>
 </div>
 
+<script src="./supabase.js"></script>
+<script src="./supabase-config.js"></script>
+<script src="./auth.js"></script>
+<script src="./auth-ui.js"></script>
 <script>
 const $ = id => document.getElementById(id);
 
