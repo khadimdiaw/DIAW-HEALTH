@@ -1,0 +1,629 @@
+:root {
+  --bg: #06111f;
+  --panel: #0d1e31;
+  --panel2: #112941;
+  --green: #45e6c0;
+  --cyan: #55c9f5;
+  --text: #f3f8ff;
+  --muted: #91a8bf;
+  --border: rgba(111, 163, 195, .18);
+  --shadow: 0 15px 40px rgba(0,0,0,.22);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  padding: 18px;
+  color: var(--text);
+  background:
+    radial-gradient(ellipse at 15% 0%, rgba(24,112,139,.18), transparent 38%),
+    radial-gradient(ellipse at 95% 35%, rgba(27,104,108,.13), transparent 35%),
+    var(--bg);
+  font-family: Inter, system-ui, Arial, sans-serif;
+}
+
+.app {
+  max-width: 1000px;
+  margin: auto;
+}
+
+header {
+  padding: 15px 2px 28px;
+}
+
+.logo {
+  font-size: 27px;
+  letter-spacing: 1.5px;
+  font-weight: 900;
+}
+
+.logo span {
+  color: var(--green);
+}
+
+.pill {
+  border: 1px solid var(--border);
+  background: rgba(13,30,49,.85);
+  border-radius: 30px;
+  padding: 10px 14px;
+  color: var(--muted);
+  backdrop-filter: blur(12px);
+}
+
+.dot {
+  color: #8294a8;
+}
+
+.dot.active {
+  color: var(--green);
+  text-shadow: 0 0 12px var(--green);
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 32px;
+  border: 1px solid rgba(69,230,192,.2);
+  border-radius: 25px;
+  margin-bottom: 28px;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(69,230,192,.16), transparent 30%),
+    linear-gradient(135deg,#102e46,#0c2034 65%,#10383b);
+  box-shadow: var(--shadow);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 190px;
+  height: 190px;
+  right: -75px;
+  bottom: -100px;
+  border: 1px solid rgba(69,230,192,.2);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 20px rgba(69,230,192,.025),
+    0 0 0 42px rgba(69,230,192,.025);
+  pointer-events: none;
+}
+
+.hero small {
+  color: var(--green);
+  letter-spacing: 2.5px;
+  font-weight: 800;
+}
+
+h1 {
+  font-size: clamp(29px,5vw,43px);
+  line-height: 1.15;
+  margin: 15px 0 12px;
+  letter-spacing: -.8px;
+}
+
+p {
+  line-height: 1.7;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+button {
+  min-height: 46px;
+  padding: 13px 21px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s, opacity .2s;
+}
+
+button:not(:disabled):active {
+  transform: scale(.97);
+}
+
+#start {
+  color: #042019;
+  background: linear-gradient(135deg,#65f2cf,#32cda9);
+  box-shadow: 0 7px 24px rgba(53,223,181,.2);
+}
+
+#stop, .secondary {
+  color: white;
+  background: #203b55;
+  border-color: var(--border);
+}
+
+button:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+#status {
+  margin-top: 17px;
+  color: var(--green);
+  font-size: 13px;
+}
+
+h2 {
+  font-size: 18px;
+  letter-spacing: .2px;
+  margin: 30px 0 15px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 14px;
+}
+
+.card {
+  min-width: 0;
+  padding: 21px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: linear-gradient(145deg,rgba(17,41,65,.98),rgba(10,27,45,.98));
+  box-shadow: var(--shadow);
+}
+
+.card small {
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 1px;
+  font-weight: 800;
+}
+
+.value {
+  margin-top: 15px;
+  color: var(--green);
+  font-size: clamp(22px,4vw,31px);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.unit {
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.wide {
+  grid-column: 1/-1;
+}
+
+.graph {
+  height: 250px;
+  gap: 8px;
+  padding: 15px 10px 0;
+  overflow: hidden;
+  border-left: 1px solid #42617a;
+  border-bottom: 1px solid #42617a;
+  border-radius: 8px;
+  background:
+    repeating-linear-gradient(to bottom,
+      transparent 0,transparent 49px,
+      rgba(255,255,255,.065) 50px);
+}
+
+.bar {
+  flex: 1;
+  min-width: 4px;
+  max-width: 55px;
+  border-radius: 7px 7px 0 0;
+  background: linear-gradient(to top,#168c83,var(--green),#8af8df);
+  box-shadow: 0 0 12px rgba(69,230,192,.13);
+  transition: height .25s ease;
+}
+
+.graph-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.interpretation {
+  padding: 21px;
+  border: 1px solid rgba(69,230,192,.22);
+  border-radius: 17px;
+  background: linear-gradient(135deg,#102d35,#10263a);
+  box-shadow: var(--shadow);
+}
+
+.interpretation strong {
+  color: var(--green);
+}
+
+#interpretation {
+  margin-top: 9px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.history {
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.history-item {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  color: #c0d0df;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.notice {
+  margin-top: 20px;
+  padding: 16px;
+  border: 1px solid rgba(226,190,94,.28);
+  border-radius: 13px;
+  color: #e8d69c;
+  background: rgba(85,67,28,.22);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+footer {
+  padding: 35px 10px;
+  color: #718ba4;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+@media(max-width:520px) {
+  body {
+    padding: 13px;
+  }
+
+  header {
+    padding-bottom: 20px;
+  }
+
+  .hero {
+    padding: 23px 19px;
+    border-radius: 20px;
+  }
+
+  .grid {
+    gap: 10px;
+  }
+
+  .card {
+    padding: 15px 12px;
+    border-radius: 15px;
+  }
+
+  .graph {
+    height: 210px;
+    gap: 5px;
+  }
+}
+
+@media(max-width:320px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .controls button {
+    width: 100%;
+  }
+}
+
+/* DIAW HEALTH 4.0 - Analyse intelligente */
+
+.analysis-panel {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 25px;
+  margin: 22px 0;
+  border: 1px solid rgba(69,230,192,.2);
+  border-radius: 22px;
+  background: linear-gradient(145deg,#102a40,#0b1b2e);
+  box-shadow: var(--shadow);
+}
+
+.analysis-orbit {
+  width: 145px;
+  height: 145px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 2px solid rgba(69,230,192,.25);
+  background: conic-gradient(
+    var(--green) 0deg,
+    rgba(69,230,192,.08) 100deg,
+    rgba(85,201,245,.35) 220deg,
+    rgba(69,230,192,.08) 360deg
+  );
+  box-shadow: 0 0 30px rgba(69,230,192,.12);
+  animation: orbit 12s linear infinite;
+}
+
+.analysis-core {
+  width: 125px;
+  height: 125px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border-radius: 50%;
+  background: #0b1e30;
+  animation: counterOrbit 12s linear infinite;
+}
+
+.analysis-core span {
+  color: var(--green);
+  font-size: 27px;
+}
+
+.analysis-core strong {
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+.analysis-core small {
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+.analysis-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.eyebrow {
+  color: var(--green);
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 800;
+}
+
+.analysis-info h2 {
+  margin: 10px 0;
+  font-size: 19px;
+}
+
+.sensor-line {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.signal-dot {
+  width: 9px;
+  height: 9px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #8294a8;
+}
+
+.signal-dot.received {
+  background: var(--green);
+  box-shadow: 0 0 12px var(--green);
+}
+
+.signal-dot.error {
+  background: #ff7373;
+  box-shadow: 0 0 10px #ff7373;
+}
+
+.analysis-panel.running .analysis-orbit {
+  animation-duration: 3s;
+  box-shadow: 0 0 35px rgba(69,230,192,.3);
+}
+
+@keyframes orbit {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes counterOrbit {
+  to { transform: rotate(-360deg); }
+}
+
+@media(max-width:520px) {
+  .analysis-panel {
+    flex-direction: column;
+    text-align: center;
+    gap: 18px;
+    padding: 22px 15px;
+  }
+
+  .analysis-orbit {
+    width: 125px;
+    height: 125px;
+  }
+
+  .analysis-core {
+    width: 107px;
+    height: 107px;
+  }
+
+  .sensor-line {
+    justify-content: center;
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .analysis-orbit,
+  .analysis-core {
+    animation: none;
+  }
+}
+
+/* DIAW HEALTH 4.0 - Analyse intelligente */
+
+.analysis-panel {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 25px;
+  margin: 22px 0;
+  border: 1px solid rgba(69,230,192,.2);
+  border-radius: 22px;
+  background: linear-gradient(145deg,#102a40,#0b1b2e);
+  box-shadow: var(--shadow);
+}
+
+.analysis-orbit {
+  width: 145px;
+  height: 145px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 2px solid rgba(69,230,192,.25);
+  background: conic-gradient(
+    var(--green) 0deg,
+    rgba(69,230,192,.08) 100deg,
+    rgba(85,201,245,.35) 220deg,
+    rgba(69,230,192,.08) 360deg
+  );
+  box-shadow: 0 0 30px rgba(69,230,192,.12);
+  animation: orbit 12s linear infinite;
+}
+
+.analysis-core {
+  width: 125px;
+  height: 125px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border-radius: 50%;
+  background: #0b1e30;
+  animation: counterOrbit 12s linear infinite;
+}
+
+.analysis-core span {
+  color: var(--green);
+  font-size: 27px;
+}
+
+.analysis-core strong {
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+.analysis-core small {
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+.analysis-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.eyebrow {
+  color: var(--green);
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 800;
+}
+
+.analysis-info h2 {
+  margin: 10px 0;
+  font-size: 19px;
+}
+
+.sensor-line {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.signal-dot {
+  width: 9px;
+  height: 9px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #8294a8;
+}
+
+.signal-dot.received {
+  background: var(--green);
+  box-shadow: 0 0 12px var(--green);
+}
+
+.signal-dot.error {
+  background: #ff7373;
+  box-shadow: 0 0 10px #ff7373;
+}
+
+.analysis-panel.running .analysis-orbit {
+  animation-duration: 3s;
+  box-shadow: 0 0 35px rgba(69,230,192,.3);
+}
+
+@keyframes orbit {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes counterOrbit {
+  to { transform: rotate(-360deg); }
+}
+
+@media(max-width:520px) {
+  .analysis-panel {
+    flex-direction: column;
+    text-align: center;
+    gap: 18px;
+    padding: 22px 15px;
+  }
+
+  .analysis-orbit {
+    width: 125px;
+    height: 125px;
+  }
+
+  .analysis-core {
+    width: 107px;
+    height: 107px;
+  }
+
+  .sensor-line {
+    justify-content: center;
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .analysis-orbit,
+  .analysis-core {
+    animation: none;
+  }
+}

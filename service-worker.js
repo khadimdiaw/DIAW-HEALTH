@@ -1,9 +1,11 @@
-const CACHE_NAME = "diaw-health-v1";
+const CACHE_NAME = "diaw-health-v4";
 
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
-  "./manifest.json"
+  "./manifest.json",
+  "./style-v4.css",
+  "./diagnostics/capteurs.js"
 ];
 
 self.addEventListener("install", event => {

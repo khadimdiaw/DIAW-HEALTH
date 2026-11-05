@@ -9,120 +9,7 @@
  <link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#081225">
 
-<style>
-:root {
- --bg:#081525;
- --panel:#10243a;
- --panel2:#0b1b2e;
- --green:#35dfb5;
- --text:#f2f7fc;
- --muted:#91a5ba;
- --border:#203951;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{
- background:var(--bg);color:var(--text);
- font-family:Arial,sans-serif;padding:16px;
-}
-.app{max-width:950px;margin:auto}
-header{
- display:flex;justify-content:space-between;
- align-items:center;padding:15px 0 25px;gap:10px;
-}
-.logo{font-size:25px;font-weight:bold}
-.logo span{color:var(--green)}
-.pill{
- background:var(--panel);padding:9px 12px;
- border:1px solid var(--border);
- border-radius:30px;color:var(--muted);font-size:12px;
-}
-.dot{color:#8294a8}
-.dot.active{color:var(--green)}
-.hero{
- background:linear-gradient(120deg,#153953,#10243a,#123c3c);
- border:1px solid var(--border);
- padding:25px;border-radius:18px;margin-bottom:20px;
-}
-.hero small{color:var(--green);letter-spacing:2px}
-h1{font-size:29px;margin:12px 0}
-p{line-height:1.6}
-.muted{color:var(--muted);font-size:13px}
-.controls{
- display:flex;gap:10px;flex-wrap:wrap;margin-top:20px
-}
-button{
- padding:13px 20px;border:0;border-radius:9px;
- font-weight:bold;cursor:pointer
-}
-#start{background:var(--green);color:#071525}
-#stop,.secondary{background:#263c52;color:white}
-button:disabled{opacity:.4}
-#status{margin-top:15px;color:var(--green);font-size:13px}
-h2{font-size:17px;margin:25px 0 14px}
-.grid{
- display:grid;grid-template-columns:repeat(2,1fr);gap:12px
-}
-.card{
- background:var(--panel);border:1px solid var(--border);
- border-radius:14px;padding:18px;min-width:0
-}
-.card small{color:var(--muted);font-size:12px}
-.value{
- color:var(--green);font-size:25px;
- font-weight:bold;margin-top:13px;overflow-wrap:anywhere
-}
-.unit{color:var(--muted);font-size:12px;margin-top:7px}
-.wide{grid-column:1/-1}
-.graph{
- position:relative;height:260px;
- display:flex;align-items:flex-end;gap:7px;
- padding:15px 10px 0;
- overflow:hidden;background:
- repeating-linear-gradient(to bottom,
- transparent 0,transparent 49px,
- rgba(255,255,255,.07) 50px);
- border-left:1px solid #8396a9;
- border-bottom:1px solid #8396a9;
- border-radius:5px;
-}
-.bar{
- flex:1;min-width:4px;max-width:55px;
- background:linear-gradient(to top,#148b73,var(--green));
- border-radius:5px 5px 0 0;
- height:2px;transition:height .2s ease;
-}
-.graph-label{
- display:flex;justify-content:space-between;
- color:var(--muted);font-size:11px;margin-top:10px
-}
-.interpretation{
- background:#102d35;border:1px solid #245c55;
- padding:18px;border-radius:13px;
-}
-.interpretation strong{color:var(--green)}
-#interpretation{margin-top:8px;font-size:14px;line-height:1.7}
-.history{
- background:var(--panel);border:1px solid var(--border);
- border-radius:14px;padding:17px
-}
-.history-item{
- padding:12px 0;border-bottom:1px solid var(--border);
- font-size:13px;color:#b6c5d5;line-height:1.7
-}
-.notice{
- margin-top:18px;padding:14px;
- background:#292b20;border:1px solid #63552d;
- color:#e5d59e;border-radius:10px;font-size:12px;line-height:1.6
-}
-footer{text-align:center;color:#687f96;font-size:12px;padding:30px}
-@media(max-width:420px){
- .grid{grid-template-columns:1fr 1fr}
- .card{padding:13px}
- .value{font-size:20px}
- .hero{padding:19px}
-}
-@media(max-width:320px){.grid{grid-template-columns:1fr}}
-</style>
+<link rel="stylesheet" href="./style-v4.css">
 </head>
 
 <body>
@@ -142,6 +29,23 @@ footer{text-align:center;color:#687f96;font-size:12px;padding:30px}
   <button id="stop" disabled>■ Arrêter</button>
  </div>
  <p id="status">En attente de démarrage.</p>
+</section>
+
+<section class="analysis-panel" aria-live="polite">
+ <div class="analysis-orbit">
+  <div class="analysis-core">
+   <span id="analysisIcon">✦</span>
+   <strong id="analysisLabel">PRÊT</strong>
+   <small id="analysisSub">DIAW SYSTEM</small>
+  </div>
+ </div>
+ <div class="analysis-info">
+  <small class="eyebrow">SURVEILLANCE EN DIRECT</small>
+  <h2 id="analysisTitle">Votre appareil est en attente</h2>
+  <p id="analysisMessage" class="muted">Démarrez une session pour collecter les données des capteurs.</p>
+  <div class="sensor-line"><span class="signal-dot" id="motionSignal"></span><span id="motionDiagnostic">Mouvement : en attente</span></div>
+  <div class="sensor-line"><span class="signal-dot" id="orientationSignal"></span><span id="orientationDiagnostic">Orientation : en attente</span></div>
+ </div>
 </section>
 
 <h2>Surveillance des capteurs</h2>
@@ -303,6 +207,12 @@ function analyserMouvement(e){
  derniereIntensite=intensite;
  derniereVariation=variation;
 
+ $("motionSignal")?.classList.add("received");
+ $("motionDiagnostic").textContent="Mouvement : données reçues";
+ $("analysisLabel").textContent="ACTIF";
+ $("analysisTitle").textContent="Analyse en cours";
+ $("analysisMessage").textContent="Les capteurs transmettent leurs mesures en temps réel.";
+
  $("accel").textContent=intensite.toFixed(2);
  ajouterMesure(variation);
  interpreter(variation);
@@ -325,6 +235,9 @@ function analyserOrientation(e){
  Math.round(e.beta)+"° / "+Math.round(e.gamma)+"°";
 
  $("gyro").textContent=derniereOrientation;
+
+ $("orientationSignal")?.classList.add("received");
+ $("orientationDiagnostic").textContent="Orientation : données reçues";
 }
 
 // Chronomètre
@@ -354,6 +267,16 @@ $("start").addEventListener("click",async()=>{
   }
 
   actif=true;
+
+  document.querySelector(".analysis-panel")?.classList.add("running");
+  $("analysisLabel").textContent="ANALYSE";
+  $("analysisTitle").textContent="Connexion aux capteurs";
+  $("analysisMessage").textContent="En attente des premières mesures du téléphone.";
+  $("motionSignal")?.classList.remove("received","error");
+  $("orientationSignal")?.classList.remove("received","error");
+  $("motionDiagnostic").textContent="Mouvement : en attente";
+  $("orientationDiagnostic").textContent="Orientation : en attente";
+
   mouvements=0;
   debut=Date.now();
   dureeFinale=0;
@@ -407,6 +330,11 @@ $("stop").addEventListener("click",()=>{
  $("dot").classList.remove("active");
  $("status").textContent="Analyse terminée.";
  $("graphState").textContent="SESSION TERMINÉE";
+
+ document.querySelector(".analysis-panel")?.classList.remove("running");
+ $("analysisLabel").textContent="TERMINÉ";
+ $("analysisTitle").textContent="Session terminée";
+ $("analysisMessage").textContent="La collecte des données est arrêtée. Vous pouvez consulter les résultats.";
 });
 
 // Historique
@@ -470,6 +398,8 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
+
+<script src="./diagnostics/capteurs.js"></script>
 </body>
 </html>
 
