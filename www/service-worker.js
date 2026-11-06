@@ -1,4 +1,4 @@
-const CACHE_NAME = "diaw-health-v4.3";
+const CACHE_NAME = "diaw-health-v4.4";
 
 const FILES_TO_CACHE = [
   "./",
@@ -9,6 +9,7 @@ const FILES_TO_CACHE = [
   "./supabase-config.js",
   "./auth.js",
   "./auth-ui.js",
+  "./capacitor-app.js",
   "./diagnostics/capteurs.js"
 ];
 

@@ -39,6 +39,24 @@
       return data;
     },
 
+    async demanderReinitialisation(email, redirectTo) {
+      const { data, error } = await client.auth.resetPasswordForEmail(
+        email.trim(),
+        { redirectTo }
+      );
+      if (error) throw error;
+      return data;
+    },
+    async echangerCodeRecuperation(code) {
+      const { data, error } = await client.auth.exchangeCodeForSession(code);
+      if (error) throw error;
+      return data;
+    },
+    async modifierMotDePasse(password) {
+      const { data, error } = await client.auth.updateUser({ password });
+      if (error) throw error;
+      return data;
+    },
     async deconnexion() {
       const { error } = await client.auth.signOut();
       if (error) throw error;

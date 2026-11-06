@@ -80,6 +80,20 @@
     <button type="button" id="showSignup" class="auth-link">S'inscrire</button>
   </div>
 
+  <div class="auth-switch">
+    <button type="button" id="showForgotPassword" class="auth-link">Mot de passe oublié ?</button>
+  </div>
+  <form id="forgotPasswordForm" hidden>
+    <h3>Réinitialiser le mot de passe</h3>
+    <p class="muted">Saisissez votre adresse e-mail pour recevoir un lien de récupération.</p>
+    <label for="forgotEmail">Adresse e-mail</label>
+    <input id="forgotEmail" type="email" autocomplete="email" required>
+    <button type="submit">Envoyer le lien</button>
+    <div class="auth-switch">
+      <button type="button" id="backToLogin" class="auth-link">Retour à la connexion</button>
+    </div>
+  </form>
+
   <form id="signupForm" hidden>
     <h3>Créer un compte</h3>
     <label for="signupName">Nom complet</label>
@@ -115,6 +129,20 @@
   </div>
 </section>
 
+
+<section class="card auth-section" id="passwordRecoverySection" hidden>
+  <small>RÉCUPÉRATION DU COMPTE</small>
+  <h2>Choisir un nouveau mot de passe</h2>
+  <p class="muted">Saisissez votre nouveau mot de passe et confirmez-le.</p>
+  <div id="recoveryMessage" class="muted" role="status"></div>
+  <form id="newPasswordForm">
+    <label for="newPassword">Nouveau mot de passe</label>
+    <input id="newPassword" type="password" minlength="6" autocomplete="new-password" required>
+    <label for="confirmNewPassword">Confirmer le mot de passe</label>
+    <input id="confirmNewPassword" type="password" minlength="6" autocomplete="new-password" required>
+    <button type="submit">Enregistrer le nouveau mot de passe</button>
+  </form>
+</section>
 
 <div id="protectedApp" hidden>
 <section class="hero">
@@ -417,6 +445,7 @@
 <script src="./supabase.js"></script>
 <script src="./supabase-config.js"></script>
 <script src="./auth.js"></script>
+<script src="./capacitor-app.js"></script>
 <script src="./auth-ui.js"></script>
 <script>
 const $ = id => document.getElementById(id);

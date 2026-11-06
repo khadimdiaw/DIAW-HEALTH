@@ -19,6 +19,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuLogout = document.getElementById("menuLogout");
   const showSignup = document.getElementById("showSignup");
     const showLogin = document.getElementById("showLogin");
+  const showForgotPassword = document.getElementById("showForgotPassword");
+  const forgotPasswordForm = document.getElementById("forgotPasswordForm");
+  const backToLogin = document.getElementById("backToLogin");
+  const passwordRecoverySection = document.getElementById("passwordRecoverySection");
+  const newPasswordForm = document.getElementById("newPasswordForm");
+  const recoveryMessage = document.getElementById("recoveryMessage");
+  let modeRecuperation = false;
 
     if (showSignup && showLogin && signupForm && loginForm) {
       showSignup.addEventListener("click", () => {
@@ -68,6 +75,15 @@ document.addEventListener("DOMContentLoaded", () => {
   function afficherUtilisateur(user) {
     const connecte = Boolean(user);
 
+    if (modeRecuperation) {
+      protectedApp.hidden = true;
+      if (authSection) authSection.hidden = true;
+      if (passwordRecoverySection) passwordRecoverySection.hidden = false;
+      if (menuButton) menuButton.hidden = true;
+      return;
+    }
+
+    if (passwordRecoverySection) passwordRecoverySection.hidden = true;
     protectedApp.hidden = !connecte;
     if (authSection) authSection.hidden = connecte;
 
@@ -127,6 +143,130 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("click", () => {
       fermerMenu();
     });
+  }
+
+  /* =========================
+     RÉINITIALISATION DU MOT DE PASSE
+     ========================= */
+
+  function afficherFormulaireRecuperation() {
+    if (loginForm) loginForm.hidden = true;
+    if (signupForm) signupForm.hidden = true;
+    if (forgotPasswordForm) forgotPasswordForm.hidden = true;
+    if (passwordRecoverySection) passwordRecoverySection.hidden = false;
+    if (authSection) authSection.hidden = true;
+  }
+
+  if (showForgotPassword && forgotPasswordForm) {
+    showForgotPassword.addEventListener("click", () => {
+      const email = document.getElementById("loginEmail")?.value || "";
+      const champEmail = document.getElementById("forgotEmail");
+      if (champEmail) champEmail.value = email;
+      loginForm.hidden = true;
+      signupForm.hidden = true;
+      forgotPasswordForm.hidden = false;
+    });
+  }
+
+  if (backToLogin) {
+    backToLogin.addEventListener("click", () => {
+      forgotPasswordForm.hidden = true;
+      loginForm.hidden = false;
+      message("");
+    });
+  }
+
+  if (forgotPasswordForm) {
+    forgotPasswordForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const bouton = forgotPasswordForm.querySelector('button[type="submit"]');
+      const email = document.getElementById("forgotEmail").value.trim();
+      bouton.disabled = true;
+      message("Envoi du lien de récupération...");
+      try {
+        await window.diawAuth.demanderReinitialisation(
+          email,
+          "diawfitness://reset-password"
+        );
+        message("Si cette adresse correspond à un compte, un e-mail de récupération va être envoyé. Vérifiez aussi vos courriers indésirables.");
+      } catch (error) {
+        message(error.message || "Impossible d'envoyer le lien de récupération.", true);
+      } finally {
+        bouton.disabled = false;
+      }
+    });
+  }
+
+  if (newPasswordForm) {
+    newPasswordForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const password = document.getElementById("newPassword").value;
+      const confirmation = document.getElementById("confirmNewPassword").value;
+      const bouton = newPasswordForm.querySelector('button[type="submit"]');
+
+      if (password.length < 6) {
+        recoveryMessage.textContent = "Le mot de passe doit contenir au moins 6 caractères.";
+        return;
+      }
+      if (password !== confirmation) {
+        recoveryMessage.textContent = "Les deux mots de passe ne correspondent pas.";
+        return;
+      }
+
+      bouton.disabled = true;
+      recoveryMessage.textContent = "Modification du mot de passe...";
+      try {
+        await window.diawAuth.modifierMotDePasse(password);
+        modeRecuperation = false;
+        try {
+          await window.diawAuth.deconnexion();
+        } catch (logoutError) {
+          console.warn("Déconnexion après récupération :", logoutError);
+        }
+        newPasswordForm.reset();
+        afficherUtilisateur(null);
+        message("Mot de passe modifié avec succès. Vous pouvez maintenant vous connecter.");
+      } catch (error) {
+        recoveryMessage.textContent = error.message || "Impossible de modifier le mot de passe.";
+      } finally {
+        bouton.disabled = false;
+      }
+    });
+  }
+
+  async function traiterLienRecuperation(url) {
+    try {
+      const lien = new URL(url);
+      if (lien.protocol !== "diawfitness:" || lien.hostname !== "reset-password") return;
+
+      const code = lien.searchParams.get("code");
+      if (!code) {
+        const erreur = lien.searchParams.get("error_description");
+        throw new Error(erreur || "Le lien de récupération est incomplet ou expiré.");
+      }
+
+      modeRecuperation = true;
+      afficherFormulaireRecuperation();
+      recoveryMessage.textContent = "Vérification du lien...";
+      await window.diawAuth.echangerCodeRecuperation(code);
+      recoveryMessage.textContent = "Lien vérifié. Choisissez votre nouveau mot de passe.";
+    } catch (error) {
+      modeRecuperation = true;
+      afficherFormulaireRecuperation();
+      recoveryMessage.textContent = error.message || "Lien de récupération invalide ou expiré.";
+    }
+  }
+
+  if (window.DiawCapacitorApp?.App) {
+    window.DiawCapacitorApp.App.addListener("appUrlOpen", (event) => {
+      if (event?.url) traiterLienRecuperation(event.url);
+    });
+
+    window.DiawCapacitorApp.App.getLaunchUrl()
+      .then(resultat => {
+        if (resultat?.url) traiterLienRecuperation(resultat.url);
+      })
+      .catch(error => console.error("Lien de récupération :", error));
   }
 
   /* =========================
@@ -591,7 +731,15 @@ document.addEventListener("DOMContentLoaded", () => {
   window.diawAuth.ecouterConnexion(
     (event, session) => {
 
-      if (event === "SIGNED_IN") {
+      if (event === "PASSWORD_RECOVERY") {
+        modeRecuperation = true;
+        afficherFormulaireRecuperation();
+        if (recoveryMessage) {
+          recoveryMessage.textContent = "Choisissez votre nouveau mot de passe.";
+        }
+      }
+
+      if (event === "SIGNED_IN" && !modeRecuperation) {
         afficherUtilisateur(
           session?.user || null
         );
