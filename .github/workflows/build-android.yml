@@ -2,7 +2,7 @@ name: Build DIAW HEALTH APK
 
 on:
   push:
-    branches: [main]
+    branches: [main, feature/diaw-health-4.1]
   workflow_dispatch:
 
 permissions:
