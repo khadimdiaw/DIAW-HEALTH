@@ -1,10 +1,10 @@
-const CACHE_NAME = "diaw-health-v4.1";
+const CACHE_NAME = "diaw-health-v4.3";
 
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
   "./manifest.json",
-  "./style-v4.css",
+  "./style-v4.css?v=20261106-2",
   "./supabase.js",
   "./supabase-config.js",
   "./auth.js",
@@ -14,34 +14,63 @@ const FILES_TO_CACHE = [
 
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(FILES_TO_CACHE);
-    })
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(FILES_TO_CACHE))
   );
-
   self.skipWaiting();
 });
 
 self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys
-          .filter(key => key !== CACHE_NAME)
-          .map(key => caches.delete(key))
-      )
-    )
-  );
+    (async () => {
+      const keys = await caches.keys();
 
-  self.clients.claim();
+      await Promise.all(
+        keys
+          .filter(key =>
+            key.startsWith("diaw-health-") &&
+            key !== CACHE_NAME
+          )
+          .map(key => caches.delete(key))
+      );
+
+      await self.clients.claim();
+    })()
+  );
 });
 
 self.addEventListener("fetch", event => {
-  if (event.request.method !== "GET") return;
+  const request = event.request;
+
+  if (request.method !== "GET") return;
+
+  const url = new URL(request.url);
+
+  if (url.origin !== self.location.origin) return;
 
   event.respondWith(
-    caches.match(event.request).then(cached => {
-      return cached || fetch(event.request);
-    })
+    (async () => {
+      try {
+        const response = await fetch(request);
+
+        if (response && response.ok) {
+          const cache = await caches.open(CACHE_NAME);
+          cache.put(request, response.clone()).catch(() => {});
+        }
+
+        return response;
+      } catch (error) {
+        const cached = await caches.match(request);
+
+        if (cached) return cached;
+
+        if (request.mode === "navigate") {
+          const page = await caches.match("./index.html");
+          if (page) return page;
+        }
+
+        throw error;
+      }
+    })()
   );
 });

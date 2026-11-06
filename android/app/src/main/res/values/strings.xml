@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">DIAW HEALTH</string>
-    <string name="title_activity_main">DIAW HEALTH</string>
+    <string name="app_name">DIAW FITNESS</string>
+    <string name="title_activity_main">DIAW FITNESS</string>
     <string name="package_name">com.diawhealth.app</string>
     <string name="custom_url_scheme">com.diawhealth.app</string>
 </resources>

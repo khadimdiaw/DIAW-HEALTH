@@ -1,6 +1,6 @@
 {
-  "name": "DIAW HEALTH",
-  "short_name": "DIAW HEALTH",
+  "name": "DIAW FITNESS",
+  "short_name": "DIAW FITNESS",
   "description": "Système de détection et d'analyse spatio-temporelle des mouvements.",
   "start_url": "./index.html",
   "scope": "./",

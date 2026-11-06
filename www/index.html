@@ -5,29 +5,82 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#081525">
-<title>DIAW HEALTH 3.0</title>
+<title>DIAW FITNESS 4.1</title>
  <link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#081225">
 
-<link rel="stylesheet" href="./style-v4.css">
+<link rel="stylesheet" href="./style-v4.css?v=20261106-2">
 </head>
 
 <body>
 <div class="app">
 
 <header>
- <div class="logo">DIAW <span>HEALTH</span></div>
- <div class="pill"><span class="dot" id="dot">●</span> <span id="headerStatus">En attente</span></div>
+  <div class="logo">DIAW <span>HEALTH</span></div>
+
+  <div class="header-actions">
+    <div class="pill">
+      <span class="dot" id="dot">●</span>
+      <span id="headerStatus">En attente</span>
+    </div>
+
+    <button id="menuButton" class="menu-button" type="button" hidden aria-label="Ouvrir le menu">
+      ☰
+    </button>
+  </div>
 </header>
+
+<div id="mainMenu" class="main-menu" hidden>
+  <div class="menu-user">
+    <small>COMPTE CONNECTÉ</small>
+    <strong id="menuUserName">Utilisateur</strong>
+  </div>
+
+  <button type="button" class="menu-item" id="menuProfile">
+    👤 <span>Mon profil</span>
+  </button>
+
+  <button type="button" class="menu-item" id="menuSessions">
+    📊 <span>Mes sessions</span>
+  </button>
+
+  <button type="button" class="menu-item" id="menuSettings">
+    ⚙️ <span>Paramètres</span>
+  </button>
+
+  <button type="button" class="menu-item" id="menuSecurity">
+    🔒 <span>Sécurité</span>
+  </button>
+
+  <div class="menu-separator"></div>
+
+  <button type="button" class="menu-item menu-logout" id="menuLogout">
+    🚪 <span>Déconnexion</span>
+  </button>
+</div>
 
 <section class="card auth-section" id="authSection">
   <small>ESPACE PERSONNEL</small>
-  <h2>Votre compte DIAW HEALTH</h2>
+  <h2>Votre compte DIAW FITNESS</h2>
   <p class="muted">Créez votre compte pour retrouver votre progression.</p>
 
   <div id="authMessage" class="muted" role="status"></div>
 
-  <form id="signupForm">
+  <form id="loginForm">
+    <h3>Connexion</h3>
+    <label for="loginEmail">Adresse e-mail</label>
+    <input id="loginEmail" type="email" autocomplete="email" required>
+    <label for="loginPassword">Mot de passe</label>
+    <input id="loginPassword" type="password" autocomplete="current-password" required>
+    <button type="submit" class="secondary">Se connecter</button>
+  </form>
+
+  <div class="auth-switch">
+    <span>Pas encore de compte ?</span>
+    <button type="button" id="showSignup" class="auth-link">S'inscrire</button>
+  </div>
+
+  <form id="signupForm" hidden>
     <h3>Créer un compte</h3>
     <label for="signupName">Nom complet</label>
     <input id="signupName" type="text" autocomplete="name" required>
@@ -36,18 +89,25 @@
     <label for="signupPassword">Mot de passe</label>
     <input id="signupPassword" type="password" minlength="6" autocomplete="new-password" required>
     <button type="submit">Créer mon compte</button>
+
+    <div class="auth-switch">
+      <span>Déjà un compte ?</span>
+      <button type="button" id="showLogin" class="auth-link">Se connecter</button>
+    </div>
   </form>
 
-  <div class="auth-separator"></div>
-
-  <form id="loginForm">
-    <h3>Déjà inscrit ? Connexion</h3>
-    <label for="loginEmail">Adresse e-mail</label>
-    <input id="loginEmail" type="email" autocomplete="email" required>
-    <label for="loginPassword">Mot de passe</label>
-    <input id="loginPassword" type="password" autocomplete="current-password" required>
-    <button type="submit" class="secondary">Se connecter</button>
-  </form>
+  <div class="auth-welcome">
+    <div class="auth-welcome-icon">✦</div>
+    <h3>DIAW FITNESS</h3>
+    <strong>Bougez. Mesurez. Progressez.</strong>
+    <p>Votre activité, votre évolution, vos objectifs.</p>
+    <div class="auth-features">
+      <span>SUIVI</span>
+      <span>PERFORMANCE</span>
+      <span>PROGRESSION</span>
+    </div>
+    <small>VERSION 4.1 • 2026</small>
+  </div>
 
   <div id="userPanel" hidden>
     <p>Connecté en tant que <strong id="userName"></strong></p>
@@ -56,6 +116,7 @@
 </section>
 
 
+<div id="protectedApp" hidden>
 <section class="hero">
  <small>HEALTH MONITORING SYSTEM</small>
  <h1>Analyse intelligente</h1>
@@ -137,6 +198,197 @@
  <p id="interpretation">Démarrez l'analyse pour obtenir une interprétation indicative des mouvements.</p>
 </section>
 
+
+<section id="healthDashboard" class="dashboard">
+  <div class="dashboard-heading">
+    <div>
+      <small>VOTRE ACTIVITÉ</small>
+      <h2>Tableau de bord</h2>
+    </div>
+    <span class="dashboard-tag">DIAW FITNESS</span>
+  </div>
+
+  <p class="dashboard-note" id="dashboardCoverage">
+    Statistiques calculées sur les séances chargées.
+  </p>
+
+  <div class="dashboard-grid">
+    <article class="dashboard-card">
+      <span>Sessions</span>
+      <strong id="dashSessions">0</strong>
+      <small>Séances enregistrées</small>
+    </article>
+
+    <article class="dashboard-card">
+      <span>Mouvements</span>
+      <strong id="dashMovements">0</strong>
+      <small>Total des mouvements</small>
+    </article>
+
+    <article class="dashboard-card">
+      <span>Durée totale</span>
+      <strong id="dashDuration">00:00:00</strong>
+      <small>Temps d'activité</small>
+    </article>
+
+    <article class="dashboard-card">
+      <span>Intensité moyenne</span>
+      <strong id="dashIntensity">—</strong>
+      <small>m/s²</small>
+    </article>
+  </div>
+
+  <div class="dashboard-chart-card">
+    <div class="dashboard-chart-heading">
+      <div>
+        <h3>Progression</h3>
+        <small>Mouvements enregistrés</small>
+      </div>
+
+      <div class="dashboard-period">
+        <button type="button" id="dashWeekly" class="active">7 jours</button>
+        <button type="button" id="dashMonthly">6 mois</button>
+      </div>
+    </div>
+
+    <div id="dashboardChart" class="dashboard-chart">
+      <p class="muted">En attente des données...</p>
+    </div>
+  </div>
+</section>
+
+<section id="profileSection" class="card profile-section" hidden>
+    <div class="dashboard-heading">
+        <div>
+            <small>ESPACE PERSONNEL</small>
+            <h2>Mon profil sportif</h2>
+        </div>
+        <span class="dashboard-tag">DIAW FITNESS</span>
+    </div>
+
+    <form id="profileForm">
+        <label for="profileName">Nom complet</label>
+        <input type="text" id="profileName" placeholder="Votre nom">
+
+        <label for="profileAge">Date de naissance</label>
+        <input type="date" id="profileAge" autocomplete="bday">
+
+        <label for="profileHeight">Taille (cm)</label>
+        <input type="number" id="profileHeight" min="1" max="300" step="0.1" placeholder="Ex. 175">
+
+        <label for="profileWeight">Poids (kg)</label>
+        <input type="number" id="profileWeight" min="1" max="500" step="0.1" placeholder="Ex. 70">
+
+        <label for="profileGoal">Objectif quotidien de mouvements</label>
+        <input type="number" id="profileGoal" min="1" value="6000">
+
+        <button type="submit" style="width:100%;margin-top:18px">
+            Enregistrer mon profil
+        </button>
+        <p id="profileMessage" class="muted" aria-live="polite"></p>
+    </form>
+</section>
+
+<section id="settingsSection" class="card settings-section" hidden>
+  <div class="dashboard-heading">
+    <div>
+      <small>PERSONNALISATION</small>
+      <h2>Paramètres</h2>
+    </div>
+    <span class="dashboard-tag">DIAW FITNESS</span>
+  </div>
+
+  <div class="settings-group">
+    <h3>Apparence</h3>
+    <label for="themeSelect">Thème de l'application</label>
+    <select id="themeSelect">
+      <option value="dark">Mode sombre</option>
+      <option value="light">Mode gris perle</option>
+    </select>
+    <p class="muted">Votre choix sera conservé sur cet appareil.</p>
+  </div>
+
+  <div class="settings-group">
+    <h3>Notifications</h3>
+    <p id="notificationStatus" class="muted">Vérification des autorisations...</p>
+    <button type="button" id="notificationButton" class="secondary">
+      Autoriser les notifications
+    </button>
+  </div>
+
+  <div class="settings-group">
+    <h3>Objectif sportif</h3>
+    <p class="muted">Accédez à votre profil pour modifier votre objectif quotidien.</p>
+    <button type="button" id="settingsGoalButton">
+      Modifier mon objectif
+    </button>
+  </div>
+    <div class="settings-group">
+      <h3>Données et historique</h3>
+      <label class="history-retention">
+        <input type="checkbox" id="keepHistory" checked>
+        Conserver mon historique
+      </label>
+      <p class="muted">Gardez vos anciennes séances ou choisissez de les supprimer.</p>
+      <button type="button" id="deleteHistoryButton" class="danger-button">
+        Supprimer tout l'historique
+      </button>
+      <p id="historySettingsMessage" class="muted" aria-live="polite"></p>
+    </div>
+</section>
+
+<section id="securitySection" class="card settings-section" hidden>
+  <div class="dashboard-heading">
+    <div>
+      <small>PROTECTION DU COMPTE</small>
+      <h2>Sécurité</h2>
+    </div>
+    <span class="dashboard-tag">DIAW FITNESS</span>
+  </div>
+
+  <div class="settings-group">
+    <h3>Mon compte</h3>
+    <p class="muted">Adresse e-mail du compte connecté</p>
+    <strong id="securityEmail">Chargement...</strong>
+    <p id="securityStatus" class="muted">Vérification de la session...</p>
+  </div>
+
+  <div class="settings-group">
+    <h3>Modifier mon mot de passe</h3>
+    <form id="securityPasswordForm">
+      <label for="securityNewPassword">Nouveau mot de passe</label>
+      <input type="password" id="securityNewPassword"
+        minlength="8" autocomplete="new-password"
+        placeholder="8 caractères minimum" required>
+
+      <label for="securityConfirmPassword">Confirmer le nouveau mot de passe</label>
+      <input type="password" id="securityConfirmPassword"
+        minlength="8" autocomplete="new-password"
+        placeholder="Répétez le mot de passe" required>
+
+      <button type="submit" id="securityPasswordButton"
+        style="width:100%;margin-top:18px">
+        Modifier mon mot de passe
+      </button>
+
+      <p id="securityPasswordMessage" class="muted"
+        aria-live="polite"></p>
+    </form>
+  </div>
+
+  <div class="settings-group">
+    <h3>Protection de vos données</h3>
+    <p class="muted">
+      Vos séances sont associées à votre compte.
+      Les règles de sécurité de la base de données
+      limitent l'accès aux données de chaque utilisateur.
+    </p>
+    <p class="muted">
+      Ne partagez jamais votre mot de passe avec une autre personne.
+    </p>
+  </div>
+</section>
+
 <h2>Historique des sessions</h2>
 <section class="history">
  <div id="journal" class="muted">Aucune session enregistrée.</div>
@@ -149,10 +401,17 @@
  <strong>Limites :</strong> les capteurs mesurent les mouvements du téléphone, pas directement la santé de son utilisateur. Les interprétations ne constituent pas un diagnostic médical.
 </div>
 
-<footer>
- DIAW HEALTH 3.0<br>
- Développé par Khadim Diaw
+<button type="button" id="scrollTopButton"
+        class="scroll-top-button" aria-label="Retour en haut"
+        title="Retour en haut">↑</button>
+
+<footer class="app-footer">
+  <div class="footer-brand">DIAW FITNESS <span>4.1</span></div>
+  <div class="footer-apk">APPLICATION ANDROID APK</div>
+  <div class="footer-credit">© 2026 DIAW FITNESS 4.1 APK</div>
+  <div class="footer-author">Développé par <strong>KHADIM DIAW</strong></div>
 </footer>
+</div>
 </div>
 
 <script src="./supabase.js"></script>
@@ -171,6 +430,7 @@ let derniereIntensite=null;
 let derniereVariation=0;
 let derniereActivite="En attente";
 let dureeFinale=0;
+let dureePrecise=0;
 let historiqueMesures=[];
 let derniereOrientation="--";
 
@@ -186,9 +446,17 @@ for(let i=0;i<N;i++){
  barres.push(b);
 }
 
-function formatTemps(s){
- return String(Math.floor(s/60)).padStart(2,"0")
- +":"+String(s%60).padStart(2,"0");
+function formatTemps(ms){
+ const centiemesTotal=Math.floor(ms/10);
+ const heures=Math.floor(centiemesTotal/360000);
+ const minutes=Math.floor(centiemesTotal/6000)%60;
+ const secondes=Math.floor(centiemesTotal/100)%60;
+ const centiemes=centiemesTotal%100;
+
+ return String(heures).padStart(2,"0")+":"+
+ String(minutes).padStart(2,"0")+":"+
+ String(secondes).padStart(2,"0")+":"+
+ String(centiemes).padStart(2,"0");
 }
 
 // Graphique alimenté par les vraies mesures
@@ -282,8 +550,9 @@ function analyserOrientation(e){
 
 // Chronomètre
 function actualiserTemps(){
- dureeFinale=Math.floor((Date.now()-debut)/1000);
- $("duree").textContent=formatTemps(dureeFinale);
+ dureePrecise=Date.now()-debut;
+ dureeFinale=Math.floor(dureePrecise/1000);
+ $("duree").textContent=formatTemps(dureePrecise);
 }
 
 // Démarrer
@@ -320,6 +589,7 @@ $("start").addEventListener("click",async()=>{
   mouvements=0;
   debut=Date.now();
   dureeFinale=0;
+  dureePrecise=0;
   dernierMouvement=0;
   derniereIntensite=null;
   derniereVariation=0;
@@ -328,7 +598,7 @@ $("start").addEventListener("click",async()=>{
 
   $("accel").textContent="--";
   $("gyro").textContent="--";
-  $("duree").textContent="00:00";
+  $("duree").textContent="00:00:00:00";
   $("mouvements").textContent="0";
   $("niveau").textContent="Collecte des données";
   $("interpretation").textContent="En attente des premières mesures.";
@@ -345,7 +615,7 @@ $("start").addEventListener("click",async()=>{
   window.addEventListener("devicemotion",analyserMouvement);
   window.addEventListener("deviceorientation",analyserOrientation);
 
-  timer=setInterval(actualiserTemps,1000);
+  timer=setInterval(actualiserTemps,10);
 
  }catch(err){
   $("status").textContent=err.message;
@@ -377,28 +647,323 @@ $("stop").addEventListener("click",()=>{
  $("analysisMessage").textContent="La collecte des données est arrêtée. Vous pouvez consulter les résultats.";
 });
 
-// Historique
-function afficherHistorique(){
- const sessions=JSON.parse(localStorage.getItem("diawHealthSessions")||"[]");
- $("journal").textContent="";
 
- if(!sessions.length){
-  $("journal").textContent="Aucune session enregistrée.";
-  return;
- }
+// Tableau de bord DIAW FITNESS
+let dashboardSessions = [];
+let dashboardPeriod = "weekly";
 
- sessions.slice(-5).reverse().forEach(s=>{
-  const item=document.createElement("div");
-  item.className="history-item";
-  item.textContent=s.date+" — Durée : "+s.duree+
-  " — Mouvements : "+s.mouvements+
-  " — Intensité moyenne : "+s.moyenne+" m/s²";
-  $("journal").appendChild(item);
- });
+function afficherTableauBord(sessions){
+  dashboardSessions = sessions || [];
+
+  const totalMouvements = dashboardSessions.reduce(
+    (total, s) => total + Number(s.movements || 0), 0
+  );
+
+  const totalSecondes = dashboardSessions.reduce(
+    (total, s) => total + Number(s.duration_seconds || 0), 0
+  );
+
+  const intensites = dashboardSessions
+    .filter(s => s.average_intensity !== null &&
+                 s.average_intensity !== undefined)
+    .map(s => Number(s.average_intensity));
+
+  const moyenne = intensites.length
+    ? intensites.reduce((a,b) => a+b, 0) / intensites.length
+    : null;
+
+  $("dashSessions").textContent = dashboardSessions.length;
+  $("dashMovements").textContent =
+    totalMouvements.toLocaleString("fr-FR");
+  $("dashDuration").textContent = formatTemps(totalSecondes * 1000);
+  $("dashIntensity").textContent =
+    moyenne === null ? "—" : moyenne.toFixed(2);
+
+  $("dashboardCoverage").textContent =
+    "Calcul sur " + dashboardSessions.length +
+    " séance(s) chargée(s), parmi les 50 dernières.";
+
+  dessinerGraphiqueDashboard();
+}
+
+function dessinerGraphiqueDashboard(){
+  const zone = $("dashboardChart");
+  zone.textContent = "";
+
+  const maintenant = new Date();
+  const groupes = [];
+
+  if(dashboardPeriod === "weekly"){
+    for(let i=6; i>=0; i--){
+      const date = new Date(maintenant);
+      date.setDate(date.getDate()-i);
+
+      groupes.push({
+        label: date.toLocaleDateString("fr-FR",{weekday:"short"}),
+        annee: date.getFullYear(),
+        mois: date.getMonth(),
+        jour: date.getDate(),
+        valeur: 0
+      });
+    }
+  } else {
+    for(let i=5; i>=0; i--){
+      const date = new Date(
+        maintenant.getFullYear(),
+        maintenant.getMonth()-i,
+        1
+      );
+
+      groupes.push({
+        label: date.toLocaleDateString("fr-FR",{month:"short"}),
+        annee: date.getFullYear(),
+        mois: date.getMonth(),
+        valeur: 0
+      });
+    }
+  }
+
+  dashboardSessions.forEach(s => {
+    const date = new Date(s.started_at);
+    if(Number.isNaN(date.getTime())) return;
+
+    const groupe = groupes.find(g => {
+      if(dashboardPeriod === "weekly"){
+        return g.annee === date.getFullYear() &&
+          g.mois === date.getMonth() &&
+          g.jour === date.getDate();
+      }
+
+      return g.annee === date.getFullYear() &&
+        g.mois === date.getMonth();
+    });
+
+    if(groupe){
+      groupe.valeur += Number(s.movements || 0);
+    }
+  });
+
+  const maximum = Math.max(1, ...groupes.map(g => g.valeur));
+
+  groupes.forEach(g => {
+    const colonne = document.createElement("div");
+    colonne.className = "dashboard-bar-column";
+
+    const valeur = document.createElement("small");
+    valeur.textContent = g.valeur.toLocaleString("fr-FR");
+
+    const piste = document.createElement("div");
+    piste.className = "dashboard-bar-track";
+
+    const barre = document.createElement("div");
+    barre.className = "dashboard-bar";
+    barre.style.height =
+      Math.max(3, (g.valeur / maximum) * 100) + "%";
+    barre.title = g.valeur + " mouvements";
+
+    piste.appendChild(barre);
+
+    const etiquette = document.createElement("span");
+    etiquette.textContent = g.label;
+
+    colonne.append(valeur, piste, etiquette);
+    zone.appendChild(colonne);
+  });
+}
+
+const dashWeekly = $("dashWeekly");
+const dashMonthly = $("dashMonthly");
+
+dashWeekly.addEventListener("click", () => {
+  dashboardPeriod = "weekly";
+  dashWeekly.classList.add("active");
+  dashMonthly.classList.remove("active");
+  dessinerGraphiqueDashboard();
+});
+
+dashMonthly.addEventListener("click", () => {
+  dashboardPeriod = "monthly";
+  dashMonthly.classList.add("active");
+  dashWeekly.classList.remove("active");
+  dessinerGraphiqueDashboard();
+});
+
+// Historique local
+function afficherHistoriqueLocal(){
+  const sessions = JSON.parse(
+    localStorage.getItem("diawHealthSessions") || "[]"
+  );
+
+  $("journal").textContent = "";
+
+  if(!sessions.length){
+    $("journal").textContent = "Aucune session enregistrée.";
+    return;
+  }
+
+  sessions.slice(-5).reverse().forEach(s => {
+    const item = document.createElement("div");
+    item.className = "history-item";
+    item.textContent =
+      s.date + " — Durée : " + s.duree +
+      " — Mouvements : " + s.mouvements +
+      " — Intensité moyenne : " + s.moyenne + " m/s²";
+    $("journal").appendChild(item);
+  });
+}
+
+// Historique synchronisé avec Supabase
+async function afficherHistorique(){
+  const journal = $("journal");
+  journal.textContent = "Chargement de vos séances...";
+
+  try {
+    const utilisateur = await window.diawAuth.utilisateurActuel();
+
+    if(!utilisateur){
+      afficherHistoriqueLocal();
+      return;
+    }
+
+    const { data, error } = await window.diawAuth.client
+      .from("sessions")
+      .select("id, started_at, duration_seconds, movements, average_intensity, target_movements, target_reached")
+      .eq("user_id", utilisateur.id)
+      .order("started_at", { ascending: false })
+      .limit(50);
+
+    if(error) throw error;
+
+    afficherTableauBord(data || []);
+
+    journal.textContent = "";
+
+    if(!data || data.length === 0){
+      journal.textContent = "Aucune séance synchronisée dans votre compte.";
+      return;
+    }
+
+    data.forEach(s => {
+      const item = document.createElement("div");
+      item.className = "history-item";
+
+      const date = new Date(s.started_at).toLocaleString("fr-FR");
+      const duree = formatTemps(Number(s.duration_seconds || 0) * 1000);
+      const intensite = s.average_intensity === null
+        ? "Non disponible"
+        : Number(s.average_intensity).toFixed(2) + " m/s²";
+
+      item.textContent =
+        date +
+        " — Durée : " + duree +
+        " — Mouvements : " + s.movements +
+        " — Intensité moyenne : " + intensite +
+        " — Objectif : " +
+        (s.target_reached ? "Atteint" : "Non atteint");
+
+      journal.appendChild(item);
+    });
+
+  } catch(error) {
+    console.error("Erreur de synchronisation de l'historique :", error);
+    afficherHistoriqueLocal();
+
+    const avertissement = document.createElement("p");
+    avertissement.textContent =
+      "Synchronisation impossible : " + error.message;
+    avertissement.style.color = "#ff7777";
+    journal.appendChild(avertissement);
+  }
+}
+
+
+// GESTION DE LA CONSERVATION DE L'HISTORIQUE
+const keepHistoryCheckbox = document.getElementById("keepHistory");
+const deleteHistoryButton = document.getElementById("deleteHistoryButton");
+const historySettingsMessage = document.getElementById("historySettingsMessage");
+
+let conserverHistorique = true;
+
+try {
+  conserverHistorique =
+    localStorage.getItem("diawFitnessKeepHistory") !== "false";
+} catch (error) {
+  console.warn("Préférence de conservation inaccessible.");
+}
+
+if (keepHistoryCheckbox) {
+  keepHistoryCheckbox.checked = conserverHistorique;
+
+  keepHistoryCheckbox.addEventListener("change", () => {
+    conserverHistorique = keepHistoryCheckbox.checked;
+
+    try {
+      localStorage.setItem(
+        "diawFitnessKeepHistory",
+        String(conserverHistorique)
+      );
+    } catch (error) {
+      historySettingsMessage.textContent =
+        "Impossible d'enregistrer cette préférence.";
+      return;
+    }
+
+    historySettingsMessage.textContent = conserverHistorique
+      ? "Vos prochaines sessions seront conservées."
+      : "Vos prochaines sessions ne seront plus enregistrées.";
+  });
+}
+
+if (deleteHistoryButton) {
+  deleteHistoryButton.addEventListener("click", async () => {
+    const confirmation = confirm(
+      "Voulez-vous vraiment supprimer définitivement tout votre historique ? Cette action est irréversible."
+    );
+
+    if (!confirmation) return;
+
+    deleteHistoryButton.disabled = true;
+    historySettingsMessage.textContent =
+      "Suppression de l'historique en cours...";
+
+    try {
+      const utilisateur =
+        await window.diawAuth.utilisateurActuel();
+
+      if (utilisateur) {
+        const { error } = await window.diawAuth.client
+          .from("sessions")
+          .delete()
+          .eq("user_id", utilisateur.id);
+
+        if (error) throw error;
+      }
+
+      localStorage.removeItem("diawHealthSessions");
+
+      if (utilisateur) {
+        await afficherHistorique();
+        historySettingsMessage.textContent =
+          "Historique supprimé du téléphone et de votre compte.";
+      } else {
+        afficherHistoriqueLocal();
+        afficherTableauBord([]);
+        historySettingsMessage.textContent =
+          "Historique local supprimé. Connectez-vous pour gérer également les données de votre compte.";
+      }
+    } catch (error) {
+      console.error("Erreur de suppression :", error);
+      historySettingsMessage.textContent =
+        "Suppression impossible : " + error.message +
+        ". Les données locales ont été conservées.";
+    } finally {
+      deleteHistoryButton.disabled = false;
+    }
+  });
 }
 
 // Sauvegarder
-$("save").addEventListener("click",()=>{
+$("save").addEventListener("click", async () => {
  if(actif){
   alert("Arrêtez l'analyse avant de sauvegarder.");
   return;
@@ -408,24 +973,86 @@ $("save").addEventListener("click",()=>{
   return;
  }
 
- const moyenne=historiqueMesures.length?
- historiqueMesures.reduce((a,b)=>a+b,0)/historiqueMesures.length:0;
+ if (!conserverHistorique) {
+    debut = 0;
+    alert("La conservation de l'historique est désactivée. Cette session n'a pas été enregistrée.");
+    return;
+  }
 
- const sessions=JSON.parse(localStorage.getItem("diawHealthSessions")||"[]");
+  const moyenne=historiqueMesures.length
+  ? historiqueMesures.reduce((a,b)=>a+b,0)/historiqueMesures.length
+  : 0;
 
- sessions.push({
-  date:new Date().toLocaleString("fr-FR"),
-  duree:formatTemps(dureeFinale),
+ const dateDebut=new Date(debut);
+ const dateFin=new Date();
+
+ const rapport={
+  date:dateFin.toLocaleString("fr-FR"),
+  duree:formatTemps(dureePrecise),
   mouvements:mouvements,
   moyenne:moyenne.toFixed(2)
- });
+ };
 
+ const sessions=JSON.parse(
+  localStorage.getItem("diawHealthSessions")||"[]"
+ );
+ sessions.push(rapport);
  localStorage.setItem("diawHealthSessions",JSON.stringify(sessions));
 
  afficherHistorique();
  debut=0;
- alert("Rapport enregistré.");
+
+ let messageFinal="Rapport enregistré sur cet appareil.";
+
+ try {
+  const utilisateur=await window.diawAuth.utilisateurActuel();
+
+  if(utilisateur){
+   const {error}=await window.diawAuth.client
+    .from("sessions")
+    .insert({
+     user_id:utilisateur.id,
+     started_at:dateDebut.toISOString(),
+     ended_at:dateFin.toISOString(),
+     duration_seconds:dureeFinale,
+     movements:mouvements,
+     average_intensity:Number(moyenne.toFixed(2)),
+     target_movements:6000,
+     target_reached:mouvements>=6000
+    });
+
+   if(error) throw error;
+
+   messageFinal="Rapport enregistré sur votre appareil et dans votre compte DIAW FITNESS.";
+  } else {
+   messageFinal+=" Connectez-vous pour enregistrer vos séances dans votre compte.";
+  }
+ } catch(error) {
+  messageFinal+=" Attention : synchronisation cloud impossible. "+error.message;
+ }
+
+ alert(messageFinal);
 });
+
+// Ouverture de l'historique depuis le menu
+const boutonMesSessions = document.getElementById("menuSessions");
+
+if(boutonMesSessions){
+  boutonMesSessions.addEventListener("click", async () => {
+    const menu = document.getElementById("mainMenu");
+    const boutonMenu = document.getElementById("menuButton");
+
+    if(menu) menu.hidden = true;
+    if(boutonMenu) boutonMenu.setAttribute("aria-expanded", "false");
+
+    await afficherHistorique();
+
+    document.querySelector(".history")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  });
+}
 
 afficherHistorique();
 </script>
@@ -433,13 +1060,32 @@ afficherHistorique();
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("./service-worker.js")
-      .then(() => console.log("DIAW HEALTH : Service Worker activé"))
+      .then(() => console.log("DIAW FITNESS : Service Worker activé"))
       .catch(error => console.error("Erreur :", error));
   });
 }
 </script>
 
 <script src="./diagnostics/capteurs.js"></script>
+
+<script>
+(() => {
+  const bouton = document.getElementById("scrollTopButton");
+  if (!bouton) return;
+
+  function actualiserBouton() {
+    bouton.classList.toggle("visible", window.scrollY > 250);
+  }
+
+  window.addEventListener("scroll", actualiserBouton, { passive: true });
+  actualiserBouton();
+
+  bouton.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+})();
+</script>
+
 </body>
 </html>
 

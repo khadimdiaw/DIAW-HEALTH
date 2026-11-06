@@ -1,10 +1,10 @@
-// DIAW HEALTH 4.1 - Authentification Supabase
+// DIAW FITNESS 4.1 - Authentification Supabase
 
 (function () {
   const config = window.DIAW_HEALTH_SUPABASE;
 
   if (!config || !window.supabase) {
-    console.error("DIAW HEALTH : configuration Supabase introuvable.");
+    console.error("DIAW FITNESS : configuration Supabase introuvable.");
     return;
   }
 
@@ -63,5 +63,5 @@
     }
   };
 
-  console.log("DIAW HEALTH : authentification Supabase initialisée.");
+  console.log("DIAW FITNESS : authentification Supabase initialisée.");
 })();
